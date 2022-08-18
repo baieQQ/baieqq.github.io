@@ -1,0 +1,216 @@
+@import 
+url("https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css");
+
+*{
+    padding: 0;
+    margin: 0;
+    list-style: none; /* 去除清單前的圈圈 */
+    font-family: 'Noto Sans TC', sans-serif; /* google 字體 */
+}
+
+.main-header{
+    position: fixed;
+    width: 100%;
+    background: linear-gradient(to right, #623AA2 0%, #F97794 100%); /* 漸層色 */
+    z-index: 9999;
+}
+
+.nav-transparent{
+    background: transparent !important;
+    box-shadow: none;
+}
+
+.main-header .container{
+    display: flex;
+    align-items: center;  
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+
+.main-header .logo{
+    width: 100px;
+}
+
+.main-header .logo img{
+    width: 100%;
+    vertical-align: middle; /* 圖片對齊 */
+}
+
+.main-header .main-nav{
+    margin: auto;
+    display: flex;
+}
+
+.main-header .main-nav i{
+    padding: 5px 5px;
+}
+
+.main-header .main-nav a{
+    text-decoration: none; /*底線*/
+    color: #fff;
+    padding: 5px 1em; /* 上下 左右*/
+    position: relative;
+    transform: translateY(0px); /* 向上移動 */
+    transition: .3s; /* 過程秒數 */
+}
+
+.main-header .main-nav a:hover{
+    transform: translateY(-5px);
+}
+
+.main-header .main-nav a:after{
+    content: '';
+    position: absolute;
+    left: 50%;
+    right: 50%;
+    bottom: -5px;
+    height: 0;
+    border-bottom: 1px solid #fff;
+    transition: 0.3s;
+}
+
+.main-header .main-nav a:hover:after{
+    left: 0;
+    right: 0;
+}
+
+.main-header .header-search{
+    display: flex;
+}
+
+.main-header .header-search button,
+.main-header .header-search input{
+    border: none;
+    background-color: #fff;
+    padding: 5px 10px;
+}
+
+.main-header .header-search button:focus,
+.main-header .header-search input:focus{
+    outline: none; /* 去除選取時的提示黑線 */
+}
+
+.main-header .header-search button{
+    border-radius: 0 100px 100px 0;
+}
+
+.main-header .header-search input{
+    border-radius: 100px 0 0 100px;
+}
+
+body{
+    background-color: #E0E0E0;
+    height: 1500px;
+}
+
+.banner{
+    width: 100%;
+    height: 100vh;
+    background: 
+        linear-gradient(115deg, #F3B05A 50%,   /* linear-gradient(角度, 起始色彩 起始色彩所占比例, 結束色彩 結束色彩位置); */
+        transparent 50%) center center / 100%  100%,
+        url(image/ban.jpg) right center / auto 100%
+}
+
+.banner .container{
+    height: 100%;
+    width: 95%;
+    margin: auto; /* 交錯軸居中 */
+}
+
+.banner-txt{
+    height: 100%;
+    display: flex;
+    flex-direction: column; /* 主軸切為垂直 */
+    justify-content: center; /* 置中排列 */
+    align-items: flex-start; /* 對齊交錯軸最前端 */
+}
+
+.banner-txt h1{
+    font-size: 50px;
+    border-bottom: 1px solid slategrey;
+    font-weight: 900;
+}
+
+.banner-txt h1 small{
+    display: block; /* 換行 */
+    font-style: italic;
+    font-size: 23px;
+    opacity: 0.5;
+    font-weight: 700;
+    margin-top: 0.3em;
+}
+
+.banner-txt h2{
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.banner-txt p{
+    font-size: 30px;
+    font-weight: 300;
+}
+
+.wrap{
+    width: 1200px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: auto;
+}
+
+.wrap .item{
+    width: 330px;
+    margin-bottom: auto;
+    margin: 20px;
+    transition: 0.3s;
+}
+
+.wrap .item:hover{
+    transform: translateY(-10px);
+}
+
+.wrap .item img{
+    border-radius: 15px 15px 0 0;
+    width: 100%;
+    height: 200px;
+    border: black 1px solid;
+}
+
+.wrap .item .txt{
+    border: black 1px solid;
+    background-color: #fff;
+    border-radius: 0 0 15px 15px;
+    width: 100%;
+    margin-top: -5px;
+    padding-top: 5px;
+}
+
+.wrap .item h2,
+.wrap .item h3,
+.wrap .item p{
+    padding: 3px 10px;
+    line-height: 1.6;
+}
+
+
+.wrap .item h2{
+    opacity: 0.8;
+    font-weight: 500;
+    font-size: 25px;
+}
+
+.wrap .item h3{
+    border-bottom: 1px solid #888;
+    padding-bottom: 10px;
+    font-weight: 300;
+    font-size: 10px;
+}
+
+
+.wrap .item p{
+    padding-top: 5px;
+    word-break: break-all; /*文字自動換行 缺點是單字會被切半*/
+}
