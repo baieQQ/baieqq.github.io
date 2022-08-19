@@ -161,6 +161,11 @@ body{
     margin: auto;
 }
 
+.wrap a{
+    text-decoration: none; /*底線*/
+    color: black;
+}
+
 .wrap .item{
     width: 330px;
     margin-bottom: auto;
