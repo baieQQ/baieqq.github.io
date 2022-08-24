@@ -260,11 +260,6 @@ body{
         position: relative;
         left: 50%;
         transform: translate(-50%, 0);
-        font-size: 18px;  
-    }
-
-    .main-header .logo img{
-        width: 40px;
     }
 
     .wrap .item{
@@ -279,10 +274,6 @@ body{
         left: 50%;
         transform: translate(-50%, 0);
         font-size: 10px;  
-    }
-
-    .main-header .logo img{
-        width: 20px;
     }
 
     .wrap .item{
