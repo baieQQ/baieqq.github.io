@@ -12,7 +12,6 @@ url("https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css
     position: fixed;
     width: 100%;
     height: auto;
-    max-height: 20vh;
     background: linear-gradient(to right, #623AA2 0%, #F97794 100%); /* 漸層色 */
     z-index: 9999;
 }
@@ -166,21 +165,12 @@ body{
 .banner-txt h1 small{
     display: block; /* 換行 */
     font-style: italic;
-    font-size: 23px;
+    font-size: 20px;
     opacity: 0.5;
     font-weight: 700;
     margin-top: 0.3em;
 }
 
-.banner-txt h2{
-    font-size: 30px;
-    font-weight: 700;
-}
-
-.banner-txt p{
-    font-size: 30px;
-    font-weight: 300;
-}
 
 .wrap{
     width: 100%;
@@ -268,11 +258,25 @@ body{
 }
 
 @media screen and (max-width:550px) { 
+    .banner-txt h1{
+        font-size: 20px;
+    }
 
+    .banner-txt h1 small{
+        font-size: 10px;
+    }
+    .main-header .container{
+        padding: 0;
+    }
     .main-header .logo{
         position: relative;
         left: 50%;
         transform: translate(-50%, 0);
+    }
+
+    .main-header .logo{
+        height: 50px;
+        font-size: 20px ;
     }
 
     .wrap .item{
