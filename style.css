@@ -273,7 +273,6 @@ body{
         position: relative;
         left: 50%;
         transform: translate(-50%, 0);
-        font-size: 10px;  
     }
 
     .wrap .item{
