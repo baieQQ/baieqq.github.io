@@ -19,6 +19,12 @@ function init(){
 
 function game_start_reciprocal(){
     var reciprocal = document.getElementById('game_reciprocal');
+    var time_id = document.getElementById('time_id');
+    var score_id = document.getElementById('score_id');
+    game_time = 0;
+    score = 0;
+    time_id.textContent = game_time;
+    score_id.textContent = score;
     time = [500, 1500, 2500, 3500, 4500, 5500, 6500];
     setTimeout(function(){reciprocal.textContent = "5"; music_play('reciprocal_5')}, time[0]);
     setTimeout(function(){reciprocal.textContent = "4"; music_play('reciprocal_4')}, time[1]);
