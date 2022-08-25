@@ -7,6 +7,7 @@ var last_keydown_correct = 0;
 var keydown_correct = 0;
 var score = 0;
 var game_time = 0;
+var timer;
 
 function init(){
     var btn = document.getElementById('btn');
@@ -21,11 +22,13 @@ function game_start_reciprocal(){
     var reciprocal = document.getElementById('game_reciprocal');
     var time_id = document.getElementById('time_id');
     var score_id = document.getElementById('score_id');
+    var opo_id = document.getElementById('opo');
     game_time = 0;
     score = 0;
+    opo_id.textContent = '';
     time_id.textContent = game_time;
     score_id.textContent = score;
-    time = [1000, 2000, 3000, 4000, 5000, 6000, 7000];
+    time = [0, 1000, 2000, 3000, 4000, 5000, 6000];
     setTimeout(function(){reciprocal.textContent = "5"; music_play('reciprocal_5')}, time[0]);
     setTimeout(function(){reciprocal.textContent = "4"; music_play('reciprocal_4')}, time[1]);
     setTimeout(function(){reciprocal.textContent = "3"; music_play('reciprocal_3')}, time[2]);
@@ -34,13 +37,22 @@ function game_start_reciprocal(){
     setTimeout(function(){reciprocal.textContent = "開始";  music_play('reciprocal_start')}, time[5]);
     setTimeout(function(){reciprocal.textContent = ""; start_game_run = true;}, time[6]);
     setTimeout(function(){keydown_correct = game_id_rand(); game_time = 30; score = 0}, time[6]);
-    setTimeout(setInterval(game_time_reciprocal, 1000), 7000);
+    setTimeout(function(){timer = setInterval(game_time_reciprocal, 1000)}, 6000);
 }
 
 function game_time_reciprocal(){
     let tmp_id = document.getElementById('time_id');
-    if(game_time == 0){
+    if(game_time <= 0){
         start_game_run = false;
+        w = setInterval('owo', 1000);
+        for(let i = 1; i < w + 1; i++){
+            clearInterval(i);
+        }
+        
+        e = setTimeout('owo', 1000);
+        for(let i = 1; i < e + 1; i++){
+            clearInterval(i);
+        }
     }
     else{
         game_time -= 1;
