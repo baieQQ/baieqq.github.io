@@ -94,19 +94,19 @@
 
 
 #start_game{
-    position: relative;
     border: 3px black outset;
     background-color: #97CBFF;
     border-radius: 20px;
-    width: 150px;
-    height: 40px;
+    width: auto;
+    height: 50px;
+    padding: 20px;
     margin: 20px auto;
     transition-property:all;
     transition-duration:0.25s;
     transition-timing-function:ease;
 }
 
-#start_game:hover{
+#start_game:active{
     background-color: #2894ff;  
 }
 

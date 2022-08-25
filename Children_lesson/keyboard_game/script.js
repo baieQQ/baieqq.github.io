@@ -25,7 +25,7 @@ function game_start_reciprocal(){
     score = 0;
     time_id.textContent = game_time;
     score_id.textContent = score;
-    time = [500, 1500, 2500, 3500, 4500, 5500, 6500];
+    time = [1000, 2000, 3000, 4000, 5000, 6000, 7000];
     setTimeout(function(){reciprocal.textContent = "5"; music_play('reciprocal_5')}, time[0]);
     setTimeout(function(){reciprocal.textContent = "4"; music_play('reciprocal_4')}, time[1]);
     setTimeout(function(){reciprocal.textContent = "3"; music_play('reciprocal_3')}, time[2]);
@@ -34,7 +34,7 @@ function game_start_reciprocal(){
     setTimeout(function(){reciprocal.textContent = "開始";  music_play('reciprocal_start')}, time[5]);
     setTimeout(function(){reciprocal.textContent = ""; start_game_run = true;}, time[6]);
     setTimeout(function(){keydown_correct = game_id_rand(); game_time = 30; score = 0}, time[6]);
-    setTimeout(setInterval(game_time_reciprocal, 1000), 6500);
+    setTimeout(setInterval(game_time_reciprocal, 1000), 7000);
 }
 
 function game_time_reciprocal(){
