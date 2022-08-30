@@ -124,6 +124,31 @@
     letter-spacing: 3px;
 }
 
+
+#RandomBtn{
+    border: 3px black outset;
+    background-color: #97CBFF;
+    border-radius: 20px;
+    width: auto;
+    height: 50px;
+    padding: 20px;
+    margin: 20px auto;
+    transition-property:all;
+    transition-duration:0.25s;
+    transition-timing-function:ease;
+}
+
+#RandomBtn:active{
+    background-color: #2894ff;  
+}
+
+#RandomBtn p{
+    color: black;
+    line-height: 40px;
+    font-size: 25px;
+    letter-spacing: 3px;
+}
+
 #game_reciprocal{
     top: 50%;
     left: 50%;

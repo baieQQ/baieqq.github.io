@@ -226,14 +226,14 @@
                 <div class="keyboard_item"   style="flex:1;"><span ></span></div>
             </div>
         </div>
-        <div style="padding: 5px; margin: auto; width: 40%;" class="container"> 
-            <div style="font-size: 25px;"> 得分：
+        <div style="padding: 5px; margin: auto; width: 60%;" class="container"> 
+            <div style="font-size: 25px; width:auto;"> 得分：
                 <span id="score_id">
                      0 
                 </span>
             </div>
             <button id="start_game"> 
-                <p id='btn' class="center"> 開始遊戲 </p>
+                <p id='btn' class="center" style="width:auto;"> 開始遊戲 </p>
                 <audio data-key="reciprocal_start" src="music/開始.mp3"></audio>
                 <audio data-key="reciprocal_1" src="music/1.mp3"></audio>
                 <audio data-key="reciprocal_2" src="music/2.mp3"></audio>
@@ -243,8 +243,11 @@
                 <div id="game_reciprocal"></div>
             </button>
             
-            <div style="font-size: 25px;"> 遊戲時間：
-                <span id="time_id">
+            <button id="RandomBtn" style="width:auto;"> 
+                <p class="center" id="Random_text_id"> 注音依序出現 </p>
+            </button>
+            <div style="font-size: 25px; width:200px;"> 遊戲時間：
+                <span id="time_id"> 
                     0
                 </span>
             </div>

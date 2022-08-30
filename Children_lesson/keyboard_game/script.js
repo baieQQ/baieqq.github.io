@@ -1,9 +1,10 @@
 var start_game_run = false;
 let keydown_run = true;
-let error_keydown = 0;
-let correct_keydown = 0;
-var id_list = [49, 50, 53, 56, 57, 48, 189, 81, 87, 69, 82, 84, 89, 85, 73, 79, 80, 65, 83, 68, 70, 71, 72, 74, 75, 76, 186, 90, 88, 67, 86, 66, 78, 77, 188, 190, 191];
-var value_list = ['ㄅ', 'ㄉ', 'ㄓ', 'ㄚ', 'ㄞ', 'ㄢ', 'ㄦ', 'ㄆ', 'ㄊ', 'ㄍ', 'ㄐ', 'ㄔ', 'ㄗ', 'ㄧ', 'ㄛ', 'ㄟ', 'ㄣ', 'ㄇ', 'ㄋ', 'ㄎ', 'ㄑ', 'ㄕ', 'ㄘ', 'ㄨ', 'ㄜ', 'ㄠ', 'ㄤ', 'ㄈ', 'ㄌ', 'ㄏ', 'ㄒ', 'ㄖ', 'ㄙ', 'ㄩ', 'ㄝ', 'ㄡ', 'ㄥ'];
+let keydown_random = false;
+let error_count = 0;
+let correct_count = 0;
+let zhuyin_list = [49, 81, 65, 90, 50, 87, 83, 88, 69, 68, 67, 82, 70, 86, 53, 84, 71, 66, 89, 72, 78, 85, 74, 77, 56, 73, 75, 188, 57, 79, 76, 190, 48, 80, 186, 191, 189]
+var value_list = ['ㄅ', 'ㄆ', 'ㄇ', 'ㄈ', 'ㄉ', 'ㄊ', 'ㄋ', 'ㄌ', 'ㄍ', 'ㄎ', 'ㄏ', 'ㄐ', 'ㄑ', 'ㄒ', 'ㄓ', 'ㄔ', 'ㄕ', 'ㄖ', 'ㄗ', 'ㄘ', 'ㄙ', 'ㄧ', 'ㄨ', 'ㄩ', 'ㄚ', 'ㄛ', 'ㄜ', 'ㄝ', 'ㄞ', 'ㄟ', 'ㄠ', 'ㄡ', 'ㄢ', 'ㄣ', 'ㄤ', 'ㄥ', 'ㄦ'];
 
 
 var game_start_bool = false;
@@ -14,15 +15,32 @@ var game_time = 0;
 var game_score_log = [];
 var game_keydown_error = [];
 var game_keydown_correct = [];
+var game_run_model = [];
 var timer;
 
 function init(){
+    var RandomBtn = document.getElementById('RandomBtn');
     var btn = document.getElementById('btn');
     var handle_mouse = function(){
         if(!game_start_bool)
             game_start_reciprocal();
     };
     btn.addEventListener('click', handle_mouse);
+
+    let change_random = function(){
+        if(start_game_run)
+            return;
+        keydown_random = !keydown_random;
+        if(keydown_random == true){
+            var tmp = document.getElementById('Random_text_id');
+            tmp.textContent = "注音隨機出現";
+        }
+        else{
+            var tmp = document.getElementById('Random_text_id');
+            tmp.textContent = "注音依序出現";
+        }
+    }
+    RandomBtn.addEventListener('click', change_random);
 }
 
 
@@ -34,8 +52,9 @@ function game_start_reciprocal(){
     game_start_bool = true
     game_time = 0;
     score = 0;
-    error_keydown = 0;
-    correct_keydown = 0;
+    error_count = 0;
+    correct_count = 0;
+    keydown_correct = -1;
     let w = setInterval('owo', 1000);
     for(let i = 0; i < w + 1; i++){
         clearInterval(i);
@@ -62,8 +81,14 @@ function game_time_reciprocal(){
     if(game_time <= 0){
         start_game_run = false;
         game_score_log.push(score);
-        game_keydown_correct.push(correct_keydown);
-        game_keydown_error.push(error_keydown);
+        game_keydown_correct.push(correct_count);
+        game_keydown_error.push(error_count);
+        if(keydown_random == true){
+            game_run_model.push('隨機');
+        }
+        else{
+            game_run_model.push('依序');
+        }
     }
     else{
         game_time -= 1;
@@ -73,9 +98,16 @@ function game_time_reciprocal(){
 
 function game_id_rand(){
     function getrandom(){
-        return Math.floor(Math.random() * (id_list.length));
+        return Math.floor(Math.random() * (zhuyin_list.length));
     };
-    var now_id = getrandom();
+    var now_id;
+    if(keydown_random == true){
+        now_id = getrandom();
+    }
+    else{
+        if(keydown_correct == -1) now_id = 0;
+        else now_id = (keydown_correct + 1) % zhuyin_list.length;
+    }
     var now_value = value_list[now_id];
     var id = document.getElementById('opo');
     id.textContent = now_value;
@@ -98,13 +130,11 @@ function music_play(key_code){
     audio.currentTime = 0;
     audio.play();
 }
-
 function keyboard_keydown(e){
     if(start_game_run == true && keydown_run == true){
-        if(!id_list.includes(e.keyCode)){
+        if(!zhuyin_list.includes(e.keyCode)){
             return;
         }
-        console.log(keydown_run);
         var key_code = e.keyCode;
         var txt_id = document.getElementById(key_code);
         txt_id.style.fontSize = "100px";
@@ -113,10 +143,10 @@ function keyboard_keydown(e){
         txt_id.style.webkitTextStroke = "1px white";
         keydown_run = false;
         music_play("wav_" + key_code);
-        if(key_code == id_list[keydown_correct]){
+        if(key_code == zhuyin_list[keydown_correct]){
             let tmp_id = document.getElementById('score_id') 
             last_keydown_correct = keydown_correct;
-            correct_keydown += 1;
+            correct_count += 1;
             score += 100;
             tmp_id.textContent = score;
             game_image(key_code); 
@@ -135,7 +165,7 @@ function keyboard_keydown(e){
             }, 1000);
         }
         else{
-            error_keydown += 1;
+            error_count += 1;
             setTimeout(function(){
                 txt_id.style.fontSize = "24px";
                 txt_id.style.color="#eacd11";
@@ -150,7 +180,7 @@ function keyboard_keydown(e){
 function getScoreLog(){
     let score_txt = "";
     for(let i = 0; i < game_score_log.length; i++){
-        score_txt += '第 ' + (i + 1) + ' 次成績為：' + game_score_log[i] + '，正確點擊次數為：' + game_keydown_correct[i] + '，錯誤次數為：' + game_keydown_error[i] + '\n';
+        score_txt += '第 ' + (i + 1) + ' 次成績為：' + game_score_log[i] + '，正確點擊次數為：' + game_keydown_correct[i] + '，錯誤次數為：' + game_keydown_error[i] + '，遊戲模式為：' + game_run_model[i] + '\n';
     }
     console.log(score_txt);
     return score_txt;
