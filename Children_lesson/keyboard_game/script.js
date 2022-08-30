@@ -76,7 +76,7 @@ function game_image(key_code){
     id.textContent = '';
     var img = document.getElementById(`image_${key_code}`);
     img.style.display = "block";
-    setTimeout(function(){img.style.display = "none"}, 2000);
+    setTimeout(function(){img.style.display = "none"}, 1000);
     
 }
 
@@ -113,13 +113,13 @@ function keyboard_keydown(e){
                 txt_id.style.zIndex = "1";
                 txt_id.style.webkitTextStroke = ""; 
                 start_game_run = true
-            }, 2000);
+            }, 1000);
             
             setTimeout(function(){
                 while(last_keydown_correct == keydown_correct){
                     keydown_correct = game_id_rand();
                 }
-            }, 2000);
+            }, 1000);
         }
         else{
             setTimeout(function(){

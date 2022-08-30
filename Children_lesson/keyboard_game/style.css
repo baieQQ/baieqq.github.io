@@ -130,6 +130,7 @@
     transform: translate(-50%, -50%); /* 往左移 50% 往上移 50%*/
     color: black;
     -webkit-text-stroke:5px #fff;
+    z-index: 10000;
     font-size: 300px;
     letter-spacing: 3px;
     font-family : "arial";
