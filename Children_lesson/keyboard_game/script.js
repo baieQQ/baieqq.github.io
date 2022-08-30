@@ -2,7 +2,7 @@ var start_game_run = false;
 var id_list = [49, 50, 53, 56, 57, 48, 189, 81, 87, 69, 82, 84, 89, 85, 73, 79, 80, 65, 83, 68, 70, 71, 72, 74, 75, 76, 186, 90, 88, 67, 86, 66, 78, 77, 188, 190, 191];
 var value_list = ['ㄅ', 'ㄉ', 'ㄓ', 'ㄚ', 'ㄞ', 'ㄢ', 'ㄦ', 'ㄆ', 'ㄊ', 'ㄍ', 'ㄐ', 'ㄔ', 'ㄗ', 'ㄧ', 'ㄛ', 'ㄟ', 'ㄣ', 'ㄇ', 'ㄋ', 'ㄎ', 'ㄑ', 'ㄕ', 'ㄘ', 'ㄨ', 'ㄜ', 'ㄠ', 'ㄤ', 'ㄈ', 'ㄌ', 'ㄏ', 'ㄒ', 'ㄖ', 'ㄙ', 'ㄩ', 'ㄝ', 'ㄡ', 'ㄥ'];
 
-
+var game_start_bool = false;
 var last_keydown_correct = 0;
 var keydown_correct = 0;
 var score = 0;
@@ -12,7 +12,8 @@ var timer;
 function init(){
     var btn = document.getElementById('btn');
     var handle_mouse = function(){
-        game_start_reciprocal();
+        if(!game_start_bool)
+            game_start_reciprocal();
     };
     btn.addEventListener('click', handle_mouse);
 }
@@ -23,6 +24,7 @@ function game_start_reciprocal(){
     var time_id = document.getElementById('time_id');
     var score_id = document.getElementById('score_id');
     var opo_id = document.getElementById('opo');
+    game_start_bool = true
     game_time = 0;
     score = 0;
     opo_id.textContent = '';
@@ -36,8 +38,8 @@ function game_start_reciprocal(){
     setTimeout(function(){reciprocal.textContent = "1"; music_play('reciprocal_1')}, time[4]);
     setTimeout(function(){reciprocal.textContent = "開始";  music_play('reciprocal_start')}, time[5]);
     setTimeout(function(){reciprocal.textContent = ""; start_game_run = true;}, time[6]);
-    setTimeout(function(){keydown_correct = game_id_rand(); game_time = 30; score = 0}, time[6]);
-    setTimeout(function(){timer = setInterval(game_time_reciprocal, 1000)}, 6000);
+    setTimeout(function(){keydown_correct = game_id_rand(); game_time = 60; score = 0 }, time[6]);
+    setTimeout(function(){setInterval(game_time_reciprocal, 1000); game_start_bool = false}, 6000);
 }
 
 function game_time_reciprocal(){
