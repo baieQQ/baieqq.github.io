@@ -48,11 +48,6 @@ function game_time_reciprocal(){
         for(let i = 1; i < w + 1; i++){
             clearInterval(i);
         }
-        
-        e = setTimeout('owo', 1000);
-        for(let i = 1; i < e + 1; i++){
-            clearInterval(i);
-        }
     }
     else{
         game_time -= 1;
