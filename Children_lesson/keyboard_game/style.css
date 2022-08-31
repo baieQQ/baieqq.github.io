@@ -81,7 +81,7 @@
     border-radius: 5px;
     height: 90%;
     margin-right:5px;
-    transition: all 0.1s; /* 動畫時間 */
+    transition: all 0.5s; /* 動畫時間 */
 }
 
 .playing{

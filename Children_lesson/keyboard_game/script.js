@@ -5,7 +5,7 @@ let error_count = 0;
 let correct_count = 0;
 let zhuyin_list = [49, 81, 65, 90, 50, 87, 83, 88, 69, 68, 67, 82, 70, 86, 53, 84, 71, 66, 89, 72, 78, 85, 74, 77, 56, 73, 75, 188, 57, 79, 76, 190, 48, 80, 186, 191, 189]
 var value_list = ['ㄅ', 'ㄆ', 'ㄇ', 'ㄈ', 'ㄉ', 'ㄊ', 'ㄋ', 'ㄌ', 'ㄍ', 'ㄎ', 'ㄏ', 'ㄐ', 'ㄑ', 'ㄒ', 'ㄓ', 'ㄔ', 'ㄕ', 'ㄖ', 'ㄗ', 'ㄘ', 'ㄙ', 'ㄧ', 'ㄨ', 'ㄩ', 'ㄚ', 'ㄛ', 'ㄜ', 'ㄝ', 'ㄞ', 'ㄟ', 'ㄠ', 'ㄡ', 'ㄢ', 'ㄣ', 'ㄤ', 'ㄥ', 'ㄦ'];
-
+let keydown_delay = 2000;
 
 var game_start_bool = false;
 var last_keydown_correct = 0;
@@ -58,6 +58,7 @@ function game_start_reciprocal(){
     error_count = 0;
     correct_count = 0;
     keydown_correct = -1;
+    keydown_delay = 2000;
     let w = setInterval('owo', 1000);
     for(let i = 0; i < w + 1; i++){
         clearInterval(i);
@@ -73,7 +74,11 @@ function game_start_reciprocal(){
     setTimeout(function(){reciprocal.textContent = "1"; music_play('reciprocal_1')}, time[4]);
     setTimeout(function(){reciprocal.textContent = "開始";  music_play('reciprocal_start')}, time[5]);
     setTimeout(function(){reciprocal.textContent = ""; start_game_run = true;}, time[6]);
-    setTimeout(function(){keydown_correct = game_id_rand(); game_time = 30; score = 0 }, time[6]);
+    setTimeout(function(){
+        keydown_correct = game_id_rand(); 
+        game_time = 60;
+        score = 0
+    }, time[6]);
     setTimeout(function(){game_time_reciprocal(); setInterval(game_time_reciprocal, 1000); game_start_bool = false}, 6000);
 }
 
@@ -97,6 +102,11 @@ function game_time_reciprocal(){
         downloadFile();
     }
     else{
+        if(game_time == 6) music_play('reciprocal_5');
+        else if(game_time == 5) music_play('reciprocal_4');
+        else if(game_time == 4) music_play('reciprocal_3');
+        else if(game_time == 3) music_play('reciprocal_2');
+        else if(game_time == 2) music_play('reciprocal_1');
         game_time -= 1;
         tmp_id.textContent = game_time;
     }
@@ -125,7 +135,7 @@ function game_image(key_code){
     id.textContent = '';
     var img = document.getElementById(`image_${key_code}`);
     img.style.display = "block";
-    setTimeout(function(){img.style.display = "none"}, 2000);
+    setTimeout(function(){img.style.display = "none"}, keydown_delay);
 }
 
 
@@ -145,10 +155,14 @@ function music_play(key_code){
 
 function keyboard_keydown(e){
     if(start_game_run == true && keydown_run == true){
-        if(!zhuyin_list.includes(e.keyCode)){
+        var key_code = e.keyCode;
+        console.log(key_code);
+        if(key_code == 17){
+            keydown_delay = 0;
+        }
+        if(!zhuyin_list.includes(key_code)){
             return;
         }
-        var key_code = e.keyCode;
         music_play("wav_" + key_code);
         var txt_id = document.getElementById(key_code);
         keydown_run = false;
@@ -163,13 +177,13 @@ function keyboard_keydown(e){
             setTimeout(function(){
                 txt_id.classList.remove('txt_transition'); 
                 keydown_run = true
-            }, 2000);
+            }, keydown_delay);
             
             setTimeout(function(){
                 while(last_keydown_correct == keydown_correct){
                     keydown_correct = game_id_rand();
                 }
-            }, 2000);
+            }, keydown_delay);
         }
         else{
             error_count += 1;
