@@ -86,6 +86,8 @@ function game_time_reciprocal(){
         game_score_log.push(score);
         game_keydown_correct.push(correct_count);
         game_keydown_error.push(error_count);
+        var id = document.getElementById('opo');
+        id.textContent = '';
         if(keydown_random == true){
             game_run_model.push('隨機');
         }
@@ -123,7 +125,7 @@ function game_image(key_code){
     id.textContent = '';
     var img = document.getElementById(`image_${key_code}`);
     img.style.display = "block";
-    setTimeout(function(){img.style.display = "none"}, 1000);
+    setTimeout(function(){img.style.display = "none"}, 2000);
 }
 
 
@@ -149,9 +151,9 @@ function keyboard_keydown(e){
         var key_code = e.keyCode;
         music_play("wav_" + key_code);
         var txt_id = document.getElementById(key_code);
-        txt_id.classList.add('txt_transition');
         keydown_run = false;
         if(key_code == zhuyin_list[keydown_correct]){
+            txt_id.classList.add('txt_transition');
             let tmp_id = document.getElementById('score_id') 
             last_keydown_correct = keydown_correct;
             correct_count += 1;
@@ -161,20 +163,19 @@ function keyboard_keydown(e){
             setTimeout(function(){
                 txt_id.classList.remove('txt_transition'); 
                 keydown_run = true
-            }, 1000);
+            }, 2000);
             
             setTimeout(function(){
                 while(last_keydown_correct == keydown_correct){
                     keydown_correct = game_id_rand();
                 }
-            }, 1000);
+            }, 2000);
         }
         else{
             error_count += 1;
             setTimeout(function(){
-                txt_id.classList.remove('txt_transition');
                 keydown_run = true
-            }, 1000);
+            }, 500);
         }
     }
 }
