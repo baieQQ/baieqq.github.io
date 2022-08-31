@@ -22,13 +22,16 @@ function init(){
     var RandomBtn = document.getElementById('RandomBtn');
     var btn = document.getElementById('btn');
     var handle_mouse = function(){
-        if(!game_start_bool)
+        if(start_game_run == true && !game_start_bool){
+            game_time = 3;
+        }
+        else if(!game_start_bool)
             game_start_reciprocal();
     };
     btn.addEventListener('click', handle_mouse);
 
     let change_random = function(){
-        if(start_game_run)
+        if(start_game_run || game_start_bool)
             return;
         keydown_random = !keydown_random;
         if(keydown_random == true){
@@ -71,7 +74,7 @@ function game_start_reciprocal(){
     setTimeout(function(){reciprocal.textContent = "開始";  music_play('reciprocal_start')}, time[5]);
     setTimeout(function(){reciprocal.textContent = ""; start_game_run = true;}, time[6]);
     setTimeout(function(){keydown_correct = game_id_rand(); game_time = 30; score = 0 }, time[6]);
-    setTimeout(function(){setInterval(game_time_reciprocal, 1000); game_start_bool = false}, 6000);
+    setTimeout(function(){game_time_reciprocal(); setInterval(game_time_reciprocal, 1000); game_start_bool = false}, 6000);
 }
 
 function game_time_reciprocal(){
@@ -89,6 +92,7 @@ function game_time_reciprocal(){
         else{
             game_run_model.push('依序');
         }
+        downloadFile();
     }
     else{
         game_time -= 1;
@@ -187,14 +191,12 @@ function getScoreLog(){
 }
 
 function downloadFile() {
-    //藉型別陣列建構的 blob 來建立 URL
     let fileName = "ScoreLog.txt";
     const data = getScoreLog();
     let blob = new Blob([data], {
       type: "application/octet-stream",
     });
     var href = URL.createObjectURL(blob);
-    // 從 Blob 取出資料
     var link = document.createElement("a");
     document.body.appendChild(link);
     link.href = href;
