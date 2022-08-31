@@ -124,29 +124,33 @@ function game_image(key_code){
     var img = document.getElementById(`image_${key_code}`);
     img.style.display = "block";
     setTimeout(function(){img.style.display = "none"}, 1000);
-    
 }
 
 
 function music_play(key_code){
     const audio = document.querySelector(`audio[data-key="${key_code}"]`);
+    const keyboard_item = document.querySelector(`.keyboard_item[data-key="${key_code}"]`);
     if(!audio) return;
     audio.currentTime = 0;
     audio.play();
+    if(!keyboard_item)
+        return;
+    keyboard_item.classList.add('playing');
+    setTimeout(function(){
+        keyboard_item.classList.remove('playing');
+    }, 100);
 }
+
 function keyboard_keydown(e){
     if(start_game_run == true && keydown_run == true){
         if(!zhuyin_list.includes(e.keyCode)){
             return;
         }
         var key_code = e.keyCode;
-        var txt_id = document.getElementById(key_code);
-        txt_id.style.fontSize = "100px";
-        txt_id.style.color= "black";
-        txt_id.style.zIndex = "9999";
-        txt_id.style.webkitTextStroke = "1px white";
-        keydown_run = false;
         music_play("wav_" + key_code);
+        var txt_id = document.getElementById(key_code);
+        txt_id.classList.add('txt_transition');
+        keydown_run = false;
         if(key_code == zhuyin_list[keydown_correct]){
             let tmp_id = document.getElementById('score_id') 
             last_keydown_correct = keydown_correct;
@@ -155,10 +159,7 @@ function keyboard_keydown(e){
             tmp_id.textContent = score;
             game_image(key_code); 
             setTimeout(function(){
-                txt_id.style.fontSize = "24px";
-                txt_id.style.color="#eacd11";
-                txt_id.style.zIndex = "1";
-                txt_id.style.webkitTextStroke = ""; 
+                txt_id.classList.remove('txt_transition'); 
                 keydown_run = true
             }, 1000);
             
@@ -171,12 +172,9 @@ function keyboard_keydown(e){
         else{
             error_count += 1;
             setTimeout(function(){
-                txt_id.style.fontSize = "24px";
-                txt_id.style.color="#eacd11";
-                txt_id.style.zIndex = "1";
-                txt_id.style.webkitTextStroke = ""; 
+                txt_id.classList.remove('txt_transition');
                 keydown_run = true
-            }, 500);
+            }, 1000);
         }
     }
 }

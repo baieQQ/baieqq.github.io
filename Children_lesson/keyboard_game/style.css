@@ -81,6 +81,14 @@
     border-radius: 5px;
     height: 90%;
     margin-right:5px;
+    transition: all 0.1s; /* 動畫時間 */
+}
+
+.playing{
+    font-weight: bolder;
+    transform: scale(1.2); /* 放大 */
+    border-color: #ffc600; 
+    box-shadow: 0 0 10px #ffc600; /* 陰影 */    
 }
 
 .keyboard_item_1{
@@ -97,8 +105,15 @@
     font-size: 24px;
     font-family : "標楷體";
     font-weight : bold;
+    transition: all 1s;
 }
 
+.txt_transition{
+    font-size: 75px !important;
+    color: black !important;
+    -webkit-text-stroke: 1px white;
+    z-index: 9999;
+}
 
 #start_game{
     border: 3px black outset;
@@ -118,6 +133,7 @@
 }
 
 #start_game p{
+    font-weight: bolder;
     color: black;
     line-height: 40px;
     font-size: 25px;
@@ -143,6 +159,7 @@
 }
 
 #RandomBtn p{
+    font-weight: bolder;
     color: black;
     line-height: 40px;
     font-size: 25px;
