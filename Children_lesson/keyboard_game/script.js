@@ -1,8 +1,6 @@
 var start_game_run = false;
 let keydown_run = true;
 let keydown_random = false;
-let error_count = 0;
-let correct_count = 0;
 let zhuyin_list = [49, 81, 65, 90, 50, 87, 83, 88, 69, 68, 67, 82, 70, 86, 53, 84, 71, 66, 89, 72, 78, 85, 74, 77, 56, 73, 75, 188, 57, 79, 76, 190, 48, 80, 186, 191, 189]
 var value_list = ['ㄅ', 'ㄆ', 'ㄇ', 'ㄈ', 'ㄉ', 'ㄊ', 'ㄋ', 'ㄌ', 'ㄍ', 'ㄎ', 'ㄏ', 'ㄐ', 'ㄑ', 'ㄒ', 'ㄓ', 'ㄔ', 'ㄕ', 'ㄖ', 'ㄗ', 'ㄘ', 'ㄙ', 'ㄧ', 'ㄨ', 'ㄩ', 'ㄚ', 'ㄛ', 'ㄜ', 'ㄝ', 'ㄞ', 'ㄟ', 'ㄠ', 'ㄡ', 'ㄢ', 'ㄣ', 'ㄤ', 'ㄥ', 'ㄦ'];
 let keydown_delay = 2000;
@@ -10,20 +8,29 @@ let keydown_delay = 2000;
 var game_start_bool = false;
 var last_keydown_correct = 0;
 var keydown_correct = 0;
-var score = 0;
-var game_time = 0;
-var game_score_log = [];
-var game_keydown_error = [];
-var game_keydown_correct = [];
-var game_run_model = [];
-var timer;
+
+var game_status = {
+    error_count : 0,
+    correct_count : 0,
+    score : 0,
+    time : 0
+};
+
+var game_status_log = {
+    keydown_error : [],
+    keydown_correct : [],
+    score : [],
+    run_model : [], 
+    time : []
+};
+
 
 function init(){
     var RandomBtn = document.getElementById('RandomBtn');
     var btn = document.getElementById('btn');
     var handle_mouse = function(){
         if(start_game_run == true && !game_start_bool){
-            game_time = 3;
+            game_status.time = 3;
         }
         else if(!game_start_bool)
             game_start_reciprocal();
@@ -53,19 +60,10 @@ function game_start_reciprocal(){
     var score_id = document.getElementById('score_id');
     var opo_id = document.getElementById('opo');
     game_start_bool = true
-    game_time = 0;
-    score = 0;
-    error_count = 0;
-    correct_count = 0;
-    keydown_correct = -1;
-    keydown_delay = 2000;
     let w = setInterval('owo', 1000);
     for(let i = 0; i < w + 1; i++){
         clearInterval(i);
     }
-    opo_id.textContent = '';
-    time_id.textContent = game_time;
-    score_id.textContent = score;
     time = [0, 1000, 2000, 3000, 4000, 5000, 6000];
     setTimeout(function(){reciprocal.textContent = "5"; music_play('reciprocal_5')}, time[0]);
     setTimeout(function(){reciprocal.textContent = "4"; music_play('reciprocal_4')}, time[1]);
@@ -75,9 +73,21 @@ function game_start_reciprocal(){
     setTimeout(function(){reciprocal.textContent = "開始";  music_play('reciprocal_start')}, time[5]);
     setTimeout(function(){reciprocal.textContent = ""; start_game_run = true;}, time[6]);
     setTimeout(function(){
+        keydown_correct = -1;
         keydown_correct = game_id_rand(); 
-        game_time = 60;
-        score = 0
+        if(keydown_random == false){
+            game_status.time = 0;
+        }
+        else{
+            game_status.time = 60;
+        }
+        game_status.score = 0;         
+        time_id.textContent = game_status.time;
+        score_id.textContent = game_status.score;
+
+        game_status.error_count = 0;
+        game_status.correct_count = 0;
+        keydown_delay = 2000;
     }, time[6]);
     setTimeout(function(){game_time_reciprocal(); setInterval(game_time_reciprocal, 1000); game_start_bool = false}, 6000);
 }
@@ -86,29 +96,46 @@ function game_time_reciprocal(){
     if(start_game_run == false)
         return;
     let tmp_id = document.getElementById('time_id');
-    if(game_time <= 0){
-        start_game_run = false;
-        game_score_log.push(score);
-        game_keydown_correct.push(correct_count);
-        game_keydown_error.push(error_count);
-        var id = document.getElementById('opo');
-        id.textContent = '';
-        if(keydown_random == true){
-            game_run_model.push('隨機');
+    if(keydown_random == false){
+        if(game_status.score == 3700){
+            start_game_run = false;
+            var id = document.getElementById('opo');
+            id.textContent = '';
+
+            game_status_log.score.push(game_status.score);
+            game_status_log.keydown_correct.push(game_status.correct_count);
+            game_status_log.keydown_error.push(game_status.error_count);
+            game_status_log.time.push(game_status.time);
+            game_status_log.run_model.push('依序');
+            downloadFile();
         }
         else{
-            game_run_model.push('依序');
+            game_status.time += 1;
+            tmp_id.textContent = game_status.time;
         }
-        downloadFile();
     }
     else{
-        if(game_time == 6) music_play('reciprocal_5');
-        else if(game_time == 5) music_play('reciprocal_4');
-        else if(game_time == 4) music_play('reciprocal_3');
-        else if(game_time == 3) music_play('reciprocal_2');
-        else if(game_time == 2) music_play('reciprocal_1');
-        game_time -= 1;
-        tmp_id.textContent = game_time;
+        if(game_status.time <= 0){
+            start_game_run = false;
+            var id = document.getElementById('opo');
+            id.textContent = '';
+
+            game_status_log.score.push(game_status.score);
+            game_status_log.keydown_correct.push(game_status.correct_count);
+            game_status_log.keydown_error.push(game_status.error_count);
+            game_status_log.time.push(60);
+            game_status_log.run_model.push('隨機');
+            downloadFile();
+        }
+        else{
+            if(game_status.time == 6) music_play('reciprocal_5');
+            else if(game_status.time == 5) music_play('reciprocal_4');
+            else if(game_status.time == 4) music_play('reciprocal_3');
+            else if(game_status.time == 3) music_play('reciprocal_2');
+            else if(game_status.time == 2) music_play('reciprocal_1');
+            game_status.time -= 1;
+            tmp_id.textContent = game_status.time;
+        }
     }
 }
 
@@ -116,16 +143,15 @@ function game_id_rand(){
     function getrandom(){
         return Math.floor(Math.random() * (zhuyin_list.length));
     };
-    var now_id;
+    let now_id = 0;
     if(keydown_random == true){
         now_id = getrandom();
     }
     else{
-        if(keydown_correct == -1) now_id = 0;
-        else now_id = (keydown_correct + 1) % zhuyin_list.length;
+        now_id = (keydown_correct + 1) % zhuyin_list.length;
     }
-    var now_value = value_list[now_id];
-    var id = document.getElementById('opo');
+    let now_value = value_list[now_id];
+    let id = document.getElementById('opo');
     id.textContent = now_value;
     return now_id;
 }
@@ -170,9 +196,9 @@ function keyboard_keydown(e){
             txt_id.classList.add('txt_transition');
             let tmp_id = document.getElementById('score_id') 
             last_keydown_correct = keydown_correct;
-            correct_count += 1;
-            score += 100;
-            tmp_id.textContent = score;
+            game_status.correct_count += 1;
+            game_status.score += 100;
+            tmp_id.textContent = game_status.score;
             game_image(key_code); 
             setTimeout(function(){
                 txt_id.classList.remove('txt_transition'); 
@@ -186,7 +212,7 @@ function keyboard_keydown(e){
             }, keydown_delay);
         }
         else{
-            error_count += 1;
+            game_status.error_count += 1;
             setTimeout(function(){
                 keydown_run = true
             }, 500);
@@ -195,9 +221,19 @@ function keyboard_keydown(e){
 }
 
 function getScoreLog(){
-    let score_txt = "";
-    for(let i = 0; i < game_score_log.length; i++){
-        score_txt += '第 ' + (i + 1) + ' 次成績為：' + game_score_log[i] + '，正確點擊次數為：' + game_keydown_correct[i] + '，錯誤次數為：' + game_keydown_error[i] + '，遊戲模式為：' + game_run_model[i] + '\n';
+    let score_txt = "===========================\n\n";
+    for(let i = 0; i < game_status_log.score.length; i++){
+        score_txt += '第 ' + (i + 1) + ' 次測驗狀況如下：' + '\n' +
+                     ' - 遊戲模式：' + game_status_log.run_model[i] + "\n" +   
+                     ' - 正確點擊次數：' + game_status_log.keydown_correct[i] + ' 次' + '\n' +
+                     ' - 錯誤點擊次數：' + game_status_log.keydown_error[i] + ' 次' + '\n';
+
+        if(game_status_log.run_model[i] === '依序') 
+            score_txt += ' - 遊戲時間：' + game_status_log.time[i] + ' 秒' + '\n\n';
+        else
+            score_txt += ' - 遊戲分數：' + game_status_log.score[i] + ' 分' + '\n\n';
+
+        score_txt += '=========================== \n\n'; 
     }
     console.log(score_txt);
     return score_txt;
