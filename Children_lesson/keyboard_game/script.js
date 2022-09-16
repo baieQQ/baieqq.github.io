@@ -1,22 +1,23 @@
-var start_game_run = false;
-let keydown_run = true;
-let keydown_random = false;
+var start_game_run = false; // 偵測遊戲是否運行
+let keydown_run = true; // 防止一次按很多按鍵
+let keydown_random = false; // 調整模式為依序或隨機
+let keydown_delay = 2000; // 調整答對後圖片出現的間隔
 let zhuyin_list = [49, 81, 65, 90, 50, 87, 83, 88, 69, 68, 67, 82, 70, 86, 53, 84, 71, 66, 89, 72, 78, 85, 74, 77, 56, 73, 75, 188, 57, 79, 76, 190, 48, 80, 186, 191, 189]
 var value_list = ['ㄅ', 'ㄆ', 'ㄇ', 'ㄈ', 'ㄉ', 'ㄊ', 'ㄋ', 'ㄌ', 'ㄍ', 'ㄎ', 'ㄏ', 'ㄐ', 'ㄑ', 'ㄒ', 'ㄓ', 'ㄔ', 'ㄕ', 'ㄖ', 'ㄗ', 'ㄘ', 'ㄙ', 'ㄧ', 'ㄨ', 'ㄩ', 'ㄚ', 'ㄛ', 'ㄜ', 'ㄝ', 'ㄞ', 'ㄟ', 'ㄠ', 'ㄡ', 'ㄢ', 'ㄣ', 'ㄤ', 'ㄥ', 'ㄦ'];
-let keydown_delay = 2000;
 
-var game_start_bool = false;
-var last_keydown_correct = 0;
-var keydown_correct = 0;
 
-var game_status = {
+var game_start_bool = false; // 避免重複開始遊戲倒數
+var last_keydown_correct = 0; // 記錄前一個答案，避免重覆到一樣的
+var keydown_correct = 0; // 記錄答案
+
+var game_status = { //紀錄遊戲狀態，依序為錯誤次數 正確次數 分數 時間
     error_count : 0,
     correct_count : 0,
     score : 0,
     time : 0
 };
 
-var game_status_log = {
+var game_status_log = { //紀錄歷史遊戲狀態 依序為錯誤次數 正確次數 得分 模式 時間
     keydown_error : [],
     keydown_correct : [],
     score : [],
@@ -28,7 +29,7 @@ var game_status_log = {
 function init(){
     var RandomBtn = document.getElementById('RandomBtn');
     var btn = document.getElementById('btn');
-    var handle_mouse = function(){
+    var handle_mouse = function(){ // 開始遊戲按鈕
         if(start_game_run == true && !game_start_bool){
             game_status.time = 3;
         }
@@ -37,7 +38,7 @@ function init(){
     };
     btn.addEventListener('click', handle_mouse);
 
-    let change_random = function(){
+    let change_random = function(){ // 改變模式按鈕
         if(start_game_run || game_start_bool)
             return;
         keydown_random = !keydown_random;
@@ -55,23 +56,23 @@ function init(){
 
 
 function game_start_reciprocal(){
-    var reciprocal = document.getElementById('game_reciprocal');
+    var count_down = document.getElementById('game_reciprocal');
     var time_id = document.getElementById('time_id');
     var score_id = document.getElementById('score_id');
     var opo_id = document.getElementById('opo');
-    game_start_bool = true
+    game_start_bool = true;
     let w = setInterval('owo', 1000);
     for(let i = 0; i < w + 1; i++){
         clearInterval(i);
     }
     time = [0, 1000, 2000, 3000, 4000, 5000, 6000];
-    setTimeout(function(){reciprocal.textContent = "5"; music_play('reciprocal_5')}, time[0]);
-    setTimeout(function(){reciprocal.textContent = "4"; music_play('reciprocal_4')}, time[1]);
-    setTimeout(function(){reciprocal.textContent = "3"; music_play('reciprocal_3')}, time[2]);
-    setTimeout(function(){reciprocal.textContent = "2"; music_play('reciprocal_2')}, time[3]);
-    setTimeout(function(){reciprocal.textContent = "1"; music_play('reciprocal_1')}, time[4]);
-    setTimeout(function(){reciprocal.textContent = "開始";  music_play('reciprocal_start')}, time[5]);
-    setTimeout(function(){reciprocal.textContent = ""; start_game_run = true;}, time[6]);
+    setTimeout(function(){count_down.textContent = "5"; music_play('reciprocal_5')}, time[0]);
+    setTimeout(function(){count_down.textContent = "4"; music_play('reciprocal_4')}, time[1]);
+    setTimeout(function(){count_down.textContent = "3"; music_play('reciprocal_3')}, time[2]);
+    setTimeout(function(){count_down.textContent = "2"; music_play('reciprocal_2')}, time[3]);
+    setTimeout(function(){count_down.textContent = "1"; music_play('reciprocal_1')}, time[4]);
+    setTimeout(function(){count_down.textContent = "開始";  music_play('reciprocal_start')}, time[5]);
+    setTimeout(function(){count_down.textContent = ""; start_game_run = true;}, time[6]);
     setTimeout(function(){
         keydown_correct = -1;
         keydown_correct = game_id_rand(); 
