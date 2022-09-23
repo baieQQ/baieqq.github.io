@@ -20,14 +20,15 @@
   let colorDeg = 0;
   
   canvas.addEventListener('mousedown', function(e){
-    [drawX, drawY] = [e.offsetX, e.offsetY];
+    // console.log(e);
     isDrawing = true;  
+    [drawX, drawY] = [e.offsetX, e.offsetY];
   })
 
   canvas.addEventListener('mousemove', function(e){
     if(!isDrawing) return;
-    console.log(e);
-
+    // console.log(e);
+    
     ctx.lineWidth = Math.abs(lineWidth);
     ctx.strokeStyle = `hsl(${colorDeg}, 100%, 50%)`;
     
@@ -39,8 +40,7 @@
 
     lineWidth < 100 ? lineWidth += 1.5 : lineWidth = -100;
     colorDeg < 360 ? colorDeg += 1 : colorDeg = 0;
-
-  })
+})
 
   canvas.addEventListener('mouseup', () => isDrawing = false)
   canvas.addEventListener('mouseout', () => isDrawing = false)
