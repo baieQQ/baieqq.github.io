@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Key Detection</title>
+  <script type="text/javascript" src="https://www.cornify.com/js/cornify.js"></script>
+</head>
+<body>
+<script>
+const now = [];
+const secretKey = "baieQQ";
+
+window.addEventListener('keyup', (e) => {
+  if(e.key === 'CapsLock') return;
+  console.log(e.key);
+  now.push(e.key);
+  now.splice(-secretKey.length - 1, now.length - secretKey.length);
+  if (now.join('').includes(secretKey)){
+    cornify_add();
+    console.log('iwiwi');
+  }
+  console.log('pushing');
+  console.log(now);
+});
+</script>
+</body>
+</html>
