@@ -47,6 +47,7 @@
       var timeout;
       return function() {
         var context = this, args = arguments;
+        // console.log(arguments)
 
         var later = function() {
           timeout = null;
@@ -63,12 +64,13 @@
     let images = document.querySelectorAll(".slide-in");
     
     function scrollHandler() {
+      console.log(window.scrollY);
       let windowTop = window.scrollY;
       let windowBottom = windowTop + window.innerHeight;
-      console.log(windowTop);
+      // console.log(windowTop);
       images.forEach(image => {
         let imgTop = image.offsetTop;
-        let imgMid = imgTop + image.height;
+        let imgMid = imgTop + image.height / 2;
         if(imgMid > windowTop && imgMid < windowBottom){
           image.classList.add('active');
         }
