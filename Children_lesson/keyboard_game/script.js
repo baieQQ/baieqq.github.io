@@ -14,7 +14,8 @@ var game_status = { //紀錄遊戲狀態，依序為錯誤次數 正確次數 �
     error_count : 0,
     correct_count : 0,
     score : 0,
-    time : 0
+    time : 0,
+    keydown_time : []
 };
 
 var game_status_log = { //紀錄歷史遊戲狀態 依序為錯誤次數 正確次數 得分 模式 時間
@@ -22,7 +23,8 @@ var game_status_log = { //紀錄歷史遊戲狀態 依序為錯誤次數 正確�
     keydown_correct : [],
     score : [],
     run_model : [], 
-    time : []
+    time : [],
+    keydown_time : []
 };
 
 
@@ -88,6 +90,7 @@ function game_start_reciprocal(){
 
         game_status.error_count = 0;
         game_status.correct_count = 0;
+        game_status.keydown_time = [];
         keydown_delay = 2000;
     }, time[6]);
     setTimeout(function(){game_time_reciprocal(); setInterval(game_time_reciprocal, 1000); game_start_bool = false}, 6000);
@@ -102,12 +105,14 @@ function game_time_reciprocal(){
             start_game_run = false;
             var id = document.getElementById('opo');
             id.textContent = '';
-
+            
+            setTimeout(music_play('finish'), 500);
             game_status_log.score.push(game_status.score);
             game_status_log.keydown_correct.push(game_status.correct_count);
             game_status_log.keydown_error.push(game_status.error_count);
             game_status_log.time.push(game_status.time);
             game_status_log.run_model.push('依序');
+            game_status_log.keydown_time.push(game_status.keydown_time);
             downloadFile();
         }
         else{
@@ -121,6 +126,7 @@ function game_time_reciprocal(){
             var id = document.getElementById('opo');
             id.textContent = '';
 
+            setTimeout(music_play('finish'), 500);
             game_status_log.score.push(game_status.score);
             game_status_log.keydown_correct.push(game_status.correct_count);
             game_status_log.keydown_error.push(game_status.error_count);
@@ -199,11 +205,13 @@ function keyboard_keydown(e){
             last_keydown_correct = keydown_correct;
             game_status.correct_count += 1;
             game_status.score += 100;
+            game_status.keydown_time.push(game_status.time);
             tmp_id.textContent = game_status.score;
             game_image(key_code); 
             setTimeout(function(){
                 txt_id.classList.remove('txt_transition'); 
-                keydown_run = true
+                keydown_run = true            
+                music_play('right');
             }, keydown_delay);
             
             setTimeout(function(){
@@ -216,14 +224,16 @@ function keyboard_keydown(e){
             game_status.error_count += 1;
             setTimeout(function(){
                 keydown_run = true
+                music_play('error');
             }, 500);
         }
     }
 }
 
 function getScoreLog(){
-    let score_txt = "===========================\n\n";
+    let score_txt = "";
     for(let i = 0; i < game_status_log.score.length; i++){
+        score_txt = "===========================\n\n";
         score_txt += '第 ' + (i + 1) + ' 次測驗狀況如下：' + '\n' +
                      ' - 遊戲模式：' + game_status_log.run_model[i] + "\n" +   
                      ' - 正確點擊次數：' + game_status_log.keydown_correct[i] + ' 次' + '\n' +
@@ -234,7 +244,12 @@ function getScoreLog(){
         else
             score_txt += ' - 遊戲分數：' + game_status_log.score[i] + ' 分' + '\n\n';
 
-        score_txt += '=========================== \n\n'; 
+        score_txt += '=========================== \n\n';    
+        let first = 0;
+        for(let j = 0; j < game_status_log.keydown_time[i].length; j++){
+            score_txt += `第 ${j+1} 次按下 '${value_list[first++]}' 時間為 ${game_status_log.keydown_time[i][j]} 秒\n`
+        }
+        score_txt += '\n\n\n';
     }
     console.log(score_txt);
     return score_txt;
