@@ -1,0 +1,139 @@
+{
+  "status": "success",
+  "data": {
+    "matches": [
+      {
+        "type": "match",
+        "data": {
+          "id": "11e1dfcb-ba93-4c61-b757-5aeabaca4678",
+          "ai_clients": [
+            {
+              "type": "ai_client",
+              "id": 31,
+              "data": {
+                "username": "Test_Account_4",
+                "code_name": "gg",
+                "description": "a",
+                "created_at": "2022-09-20T06:09:45.757717Z",
+                "updated_at": "2022-09-20T06:09:45.764510Z"
+              },
+              "meta": {
+                "state": "NONE"
+              }
+            },
+            {
+              "type": "ai_client",
+              "id": 28,
+              "data": {
+                "username": "Test_Account_1",
+                "code_name": "start01",
+                "description": "gogoggog",
+                "created_at": "2022-09-20T06:05:37.670833Z",
+                "updated_at": "2022-09-20T06:05:37.680691Z"
+              },
+              "meta": {
+                "state": "NONE"
+              }
+            }
+          ],
+          "order": 1,
+          "result": {},
+          "game": "pingpong",
+          "game_params": [
+            {
+              "difficulty": "NORMAL",
+              "game_score": 3
+            }
+          ],
+          "state": "ready",
+          "created_at": "2022-09-20T14:51:06.443530",
+          "updated_at": "2022-09-20T06:51:06.443534"
+        }
+      },
+      {
+        "type": "match",
+        "data": {
+          "id": "2d1675a6-3b8a-469a-a4a5-047f1ad63af2",
+          "ai_clients": [
+            {
+              "type": "ai_client",
+              "id": 29,
+              "data": {
+                "username": "Test_Account_2",
+                "code_name": "mystart01",
+                "description": "",
+                "created_at": "2022-09-20T06:06:35.007811Z",
+                "updated_at": "2022-09-20T06:06:35.013863Z"
+              },
+              "meta": {
+                "state": "NONE"
+              }
+            },
+            {
+              "type": "ai_client",
+              "id": 31,
+              "data": {
+                "username": "Test_Account_4",
+                "code_name": "gg",
+                "description": "a",
+                "created_at": "2022-09-20T06:09:45.757717Z",
+                "updated_at": "2022-09-20T06:09:45.764510Z"
+              },
+              "meta": {
+                "state": "NONE"
+              }
+            }
+          ],
+          "order": 2,
+          "result": {},
+          "game": "pingpong",
+          "game_params": [
+            {
+              "difficulty": "NORMAL",
+              "game_score": 3
+            }
+          ],
+          "state": "ready",
+          "created_at": "2022-09-20T14:51:06.459426",
+          "updated_at": "2022-09-20T06:51:06.459431"
+        }
+      },
+      {
+        "type": "match",
+        "data": {
+          "id": "06b5962a-078a-4cca-928b-d3be76bb672c",
+          "ai_clients": [],
+          "order": 3,
+          "result": {},
+          "game": "pingpong",
+          "game_params": [
+            {
+              "difficulty": "NORMAL",
+              "game_score": 3
+            }
+          ],
+          "state": "ready",
+          "created_at": "2022-09-20T14:51:06.459435",
+          "updated_at": "2022-09-20T06:51:06.459436"
+        }
+      }
+    ],
+    "match_links": [
+      {
+        "type": "match_link",
+        "data": {
+          "from": "11e1dfcb-ba93-4c61-b757-5aeabaca4678",
+          "to": "06b5962a-078a-4cca-928b-d3be76bb672c"
+        }
+      },
+      {
+        "type": "match_link",
+        "data": {
+          "from": "2d1675a6-3b8a-469a-a4a5-047f1ad63af2",
+          "to": "06b5962a-078a-4cca-928b-d3be76bb672c"
+        }
+      }
+    ]
+  },
+  "type": "tournament"
+}

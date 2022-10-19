@@ -115,6 +115,10 @@
     z-index: 9999;
 }
 
+.error_transition{
+    color: red !important;
+}
+
 #start_game{
     border: 3px black outset;
     background-color: #97CBFF;

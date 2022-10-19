@@ -1,7 +1,7 @@
 var start_game_run = false; // 偵測遊戲是否運行
 let keydown_run = true; // 防止一次按很多按鍵
 let keydown_random = false; // 調整模式為依序或隨機
-let keydown_delay = 2000; // 調整答對後圖片出現的間隔
+let keydown_delay = 3000; // 調整答對後圖片出現的間隔
 let zhuyin_list = [49, 81, 65, 90, 50, 87, 83, 88, 69, 68, 67, 82, 70, 86, 53, 84, 71, 66, 89, 72, 78, 85, 74, 77, 56, 73, 75, 188, 57, 79, 76, 190, 48, 80, 186, 191, 189]
 var value_list = ['ㄅ', 'ㄆ', 'ㄇ', 'ㄈ', 'ㄉ', 'ㄊ', 'ㄋ', 'ㄌ', 'ㄍ', 'ㄎ', 'ㄏ', 'ㄐ', 'ㄑ', 'ㄒ', 'ㄓ', 'ㄔ', 'ㄕ', 'ㄖ', 'ㄗ', 'ㄘ', 'ㄙ', 'ㄧ', 'ㄨ', 'ㄩ', 'ㄚ', 'ㄛ', 'ㄜ', 'ㄝ', 'ㄞ', 'ㄟ', 'ㄠ', 'ㄡ', 'ㄢ', 'ㄣ', 'ㄤ', 'ㄥ', 'ㄦ'];
 
@@ -35,8 +35,9 @@ function init(){
         if(start_game_run == true && !game_start_bool){
             game_status.time = 3;
         }
-        else if(!game_start_bool)
+        else if(!game_start_bool){
             game_start_reciprocal();
+        }
     };
     btn.addEventListener('click', handle_mouse);
 
@@ -82,7 +83,7 @@ function game_start_reciprocal(){
             game_status.time = 0;
         }
         else{
-            game_status.time = 60;
+            game_status.time = parseInt(document.getElementById('gameTime').value);
         }
         game_status.score = 0;         
         time_id.textContent = game_status.time;
@@ -91,7 +92,7 @@ function game_start_reciprocal(){
         game_status.error_count = 0;
         game_status.correct_count = 0;
         game_status.keydown_time = [];
-        keydown_delay = 2000;
+        keydown_delay = 3000;
     }, time[6]);
     setTimeout(function(){game_time_reciprocal(); setInterval(game_time_reciprocal, 1000); game_start_bool = false}, 6000);
 }
@@ -110,9 +111,9 @@ function game_time_reciprocal(){
             game_status_log.score.push(game_status.score);
             game_status_log.keydown_correct.push(game_status.correct_count);
             game_status_log.keydown_error.push(game_status.error_count);
+            game_status_log.keydown_time.push(game_status.keydown_time);
             game_status_log.time.push(game_status.time);
             game_status_log.run_model.push('依序');
-            game_status_log.keydown_time.push(game_status.keydown_time);
             downloadFile();
         }
         else{
@@ -130,7 +131,8 @@ function game_time_reciprocal(){
             game_status_log.score.push(game_status.score);
             game_status_log.keydown_correct.push(game_status.correct_count);
             game_status_log.keydown_error.push(game_status.error_count);
-            game_status_log.time.push(60);
+            game_status_log.keydown_time.push(game_status.keydown_time);
+            game_status_log.time.push(parseInt(document.getElementById('gameTime').value));
             game_status_log.run_model.push('隨機');
             downloadFile();
         }
@@ -178,40 +180,41 @@ function music_play(key_code){
     if(!audio) return;
     audio.currentTime = 0;
     audio.play();
-    if(!keyboard_item)
-        return;
-    keyboard_item.classList.add('playing');
-    setTimeout(function(){
-        keyboard_item.classList.remove('playing');
-    }, 100);
 }
 
 function keyboard_keydown(e){
     if(start_game_run == true && keydown_run == true){
-        var key_code = e.keyCode;
-        console.log(key_code);
+        const key_code = e.keyCode;
         if(key_code == 17){
             keydown_delay = 0;
         }
         if(!zhuyin_list.includes(key_code)){
             return;
         }
-        music_play("wav_" + key_code);
-        var txt_id = document.getElementById(key_code);
+        
+        const txt_id = document.getElementById(key_code);
+        const keyboard_item = document.querySelector(`.keyboard_item[data-key="keyboard_${key_code}"]`);
+        keyboard_item.classList.add('playing');
+        setTimeout(function(){
+            keyboard_item.classList.remove('playing');
+        }, 100);
         keydown_run = false;
+
+
         if(key_code == zhuyin_list[keydown_correct]){
             txt_id.classList.add('txt_transition');
+            music_play("correct_" + key_code);
+
             let tmp_id = document.getElementById('score_id') 
             last_keydown_correct = keydown_correct;
             game_status.correct_count += 1;
             game_status.score += 100;
             game_status.keydown_time.push(game_status.time);
-            tmp_id.textContent = game_status.score;
+            tmp_id.textContent = game_status.score; 
             game_image(key_code); 
             setTimeout(function(){
                 txt_id.classList.remove('txt_transition'); 
                 keydown_run = true            
-                music_play('right');
             }, keydown_delay);
             
             setTimeout(function(){
@@ -222,10 +225,12 @@ function keyboard_keydown(e){
         }
         else{
             game_status.error_count += 1;
+            txt_id.classList.add('error_transition')
+            music_play('error');
             setTimeout(function(){
                 keydown_run = true
-                music_play('error');
-            }, 500);
+                txt_id.classList.remove('error_transition')
+            }, 750);
         }
     }
 }
@@ -239,11 +244,13 @@ function getScoreLog(){
                      ' - 正確點擊次數：' + game_status_log.keydown_correct[i] + ' 次' + '\n' +
                      ' - 錯誤點擊次數：' + game_status_log.keydown_error[i] + ' 次' + '\n';
 
-        if(game_status_log.run_model[i] === '依序') 
+        if(game_status_log.run_model[i] === '依序'){ 
             score_txt += ' - 遊戲時間：' + game_status_log.time[i] + ' 秒' + '\n\n';
-        else
+        }
+        else{
+            score_txt += ' - 遊戲時間：' + game_status_log.time[i] + ' 秒' + '\n\n';
             score_txt += ' - 遊戲分數：' + game_status_log.score[i] + ' 分' + '\n\n';
-
+        }
         score_txt += '=========================== \n\n';    
         let first = 0;
         for(let j = 0; j < game_status_log.keydown_time[i].length; j++){

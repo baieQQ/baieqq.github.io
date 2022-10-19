@@ -1,7 +1,7 @@
 const svg = document.getElementById('svg');
 
 let peopleNum = 12;
-let lineHeight = 50;
+let lineHeight = 20;
 let lineWidth = 10;
 
 let lineNodeY = [];
@@ -36,7 +36,7 @@ function init(){
     svg.innerHTML = '';
     // 最大比賽人數, 起始 x 位置, 最大節點深度, 預設右界開始
     makeSchedule(peopleNum, startX, maxNodeNum, 'Left', 0);
-    makeSchedule(peopleNum - 1, startX + lineNodeWidth[maxNodeNum + maxLoserNodeNum + 1], maxNodeNum + maxLoserNodeNum, 'Right', 1);
+    makeSchedule(peopleNum - 1, startX + lineNodeWidth[maxNodeNum + maxLoserNodeNum] * 2, maxNodeNum + maxLoserNodeNum, 'Right', 1);
 }
 
 
@@ -91,7 +91,7 @@ function makeSchedule(peopleNum, mid, nodeDepth, from, loser){ // 該場比賽�
         makeSchedule(parseInt(peopleNum / 2), leftMid, newNodeDepth, 'Left', loser);
         makeSchedule(parseInt(peopleNum / 2) + peopleNum % 2, rightMid, newNodeDepth, 'Right', loser);
     }
-    else if(from == 'Right'){ // 多的放左邊，少的放右邊
+    else{ // if(from == 'Right'){ // 多的放左邊，少的放右邊
         makeSchedule(parseInt(peopleNum / 2) + peopleNum % 2, leftMid, newNodeDepth, 'Left', loser);
         makeSchedule(parseInt(peopleNum / 2), rightMid, newNodeDepth, 'Right', loser);
     }
