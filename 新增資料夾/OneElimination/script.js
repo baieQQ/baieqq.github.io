@@ -44,7 +44,7 @@ function init(){
     }
 
     svg.style.height = lineNodeY[0] * 2;
-    svg.style.width = lineNodeX[(1 << maxNodeNum)];
+    svg.style.width = lineNodeX[(1 << maxNodeNum) - 1];
 
     svg.innerHTML = '';
     // 最大比賽人數, 起始 x 位置, 最大節點深度, 預設右界開始
