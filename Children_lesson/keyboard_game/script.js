@@ -101,7 +101,7 @@ function game_time_reciprocal(){
     if(start_game_run == false)
         return;
     let tmp_id = document.getElementById('time_id');
-    if(keydown_random == false){
+    if(keydown_random == false){ // 依序模式
         if(game_status.score == 3700){
             start_game_run = false;
             var id = document.getElementById('opo');
@@ -121,7 +121,7 @@ function game_time_reciprocal(){
             tmp_id.textContent = game_status.time;
         }
     }
-    else{
+    else{ // 隨機模式
         if(game_status.time <= 0){
             start_game_run = false;
             var id = document.getElementById('opo');
@@ -209,7 +209,11 @@ function keyboard_keydown(e){
             last_keydown_correct = keydown_correct;
             game_status.correct_count += 1;
             game_status.score += 100;
-            game_status.keydown_time.push(game_status.time);
+            if(keydown_random == false){
+                game_status.keydown_time.push(game_status.time);
+            } else{
+                game_status.keydown_time.push(parseInt(document.getElementById('gameTime').value - game_status.time));
+            }
             tmp_id.textContent = game_status.score; 
             game_image(key_code); 
             setTimeout(function(){
@@ -254,7 +258,7 @@ function getScoreLog(){
         score_txt += '=========================== \n\n';    
         let first = 0;
         for(let j = 0; j < game_status_log.keydown_time[i].length; j++){
-            score_txt += `第 ${j+1} 次按下 '${value_list[first++]}' 時間為 ${game_status_log.keydown_time[i][j]} 秒\n`
+            score_txt += `第 ${j+1} 次按下 '${value_list[first++]}' 時間為第 ${game_status_log.keydown_time[i][j]} 秒\n`
         }
         score_txt += '\n\n\n';
     }

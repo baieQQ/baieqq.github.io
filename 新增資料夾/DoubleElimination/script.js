@@ -32,13 +32,13 @@ function init(){
     }
     lineNodeY.reverse();
     svg.style.height = lineNodeY[0];
-    svg.style.width = lineNodeWidth[maxNodeNum + maxLoserNodeNum + 1] * 2;
+    svg.style.width = lineNodeWidth[maxNodeNum + maxLoserNodeNum + 1] * 3;
 
     let startX = lineNodeWidth[maxNodeNum]; // 初始 mid 位置
     svg.innerHTML = '';
     // 最大比賽人數, 起始 x 位置, 最大節點深度, 預設右界開始
     makeSchedule(peopleNum, startX, maxNodeNum, 'Left', 0);
-    makeSchedule(peopleNum - 1, startX + lineNodeWidth[maxNodeNum + maxLoserNodeNum] , maxNodeNum + maxLoserNodeNum, 'Right', 1);
+    makeSchedule(peopleNum - 1, startX + lineNodeWidth[maxNodeNum + maxLoserNodeNum] * 1.3 , maxNodeNum + maxLoserNodeNum, 'Right', 1);
 }
 
 

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="script.js"></script>
+
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app" class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>標題</th>
+                    <th>圖片</th>
+                    <th>銷售狀態</th>
+                    <th>編輯</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr></tr>
+            </tbody> 
+        </table>
+        <form>
+            <div class="mb-3">
+                <label for="productName" class="form-label">產品名稱</label>
+                <input type="text" id="productName" class="form-control">
+            </div>
+            <div class="mb-3">
+                <img v-bind:src=temp.im
+                    class="img-fluid" alt="">
+                <label for="productImage" class="form-label">產品圖片</label>
+                <input type="text" id="productImage" class="form-control">
+            </div>
+            <button type="button" class="btn btn-secondary">更新</button>
+        </form>
+    </div>
+</body>
+
+</html>

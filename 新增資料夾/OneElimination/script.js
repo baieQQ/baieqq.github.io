@@ -2,13 +2,20 @@ const svg = document.getElementById('svg');
 
 let peopleNum = 12;
 
+// 線條粗細
 let strokeWidth = 2;
+// 線條高度
 let lineHeight = 50;
+// 線條寬度
 let lineWidth = 30;
 
+// 存放每節點 Y 座標
 let lineNodeY = [];
+// 存放每節點 X 座標
 let lineNodeX = [];
+// 存放最大節點數
 let maxNodeNum = 0;
+// 二元樹 x 座標 idx 修正值
 let fix = 0;
 
 let jsondata = '';
@@ -21,6 +28,7 @@ fetch("torunaments.json")
 
 
 function init(){
+    // 初始化
     peopleNum = parseInt(document.getElementById('peopleNum').value); 
     lineNodeY = []
     lineNodeX = [];
@@ -47,21 +55,23 @@ function init(){
     svg.style.width = lineNodeX[(1 << maxNodeNum) - 1];
 
     svg.innerHTML = '';
-    // 最大比賽人數, 起始 x 位置, 最大節點深度, 預設右界開始
+    // 最大比賽人數, 最大節點數, 節點 idx 值, 預設右界開始
     makeSchedule(peopleNum, maxNodeNum, 0,'Left');
 }
 
-function makeSchedule(peopleNum, nowNodeDepth, idx, from){ // 該場比賽人數, 上一層豎線的 x 位置, 節點深度, 上一層是左界或右界 
+function makeSchedule(peopleNum, nowNodeDepth, idx, from){ // 最大比賽人數, 最大節點數, 節點 idx 值, 上一層是左界或右界 
     
     if(peopleNum <= 1){  // 比賽人數只剩下一人，結束函式
         // 畫出連接上一層的豎線
         createSvgElementLine(lineNodeX[idx - fix], lineNodeY[nowNodeDepth + 1], lineNodeX[idx - fix], lineNodeY[0]);
+        // 畫出賽程表的每個節點
         circle = createSvgElementCircle(lineNodeX[idx - fix], lineNodeY[0]);
+        
         circle.value = jsondata.data.matches[idx - fix];
         circle.addEventListener('click', (e) =>{
             console.dir(e.target.value);
         })
-
+        
         if(nowNodeDepth > 0){
             fix += (1 << nowNodeDepth) - 1;
         }
