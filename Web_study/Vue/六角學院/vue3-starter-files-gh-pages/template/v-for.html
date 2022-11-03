@@ -7,25 +7,31 @@
   <h3>呈現多筆資料於畫面上 v-for</h3>
   <p>菜單</p>
   <ul>
-    
+    <li v-for="(item, i) in products" :key="item.name">
+      {{ i + 1 }} - {{ item.name}} / {{ item.price}} 元
+    </li>
   </ul>
 
   <h3>物件回圈</h3>
   <ul>
-    
+    <li v-for="(item, key) in productsObj" :key="key">
+      {{ key }} - {{item.name}} / {{ item.price}}
+    </li>
   </ul>
 
   <h3>純數值回圈</h3>
   <ul>
-    
+    <li v-for="i in 5">
+      {{ i }}
+    </li>
   </ul>
 
   <h3>v-for 與 key</h3>
   <p>菜單</p>
   <ul>
-    <li v-for="(item, key) in products">
+    <li v-for="(item, key) in products" :key="item.name">
       {{ key }} - {{ item.name}} / {{ item.price }} 元
-      <input type="text">
+      <input type="text" >
     </li>
   </ul>
   <p>說明：有相同父元素的子元素必須有獨特的 key。重複的 key 會造成渲染錯誤。</p>
@@ -35,20 +41,22 @@
   <h3>進階技巧：在 template 標籤使用 v-for</h3>
   <table class="table">
     <tbody>
-      <tr >
-        <th rowspan="2">1</th>
-        <td colspan="2">
-          飯糰
-        </td>
-      </tr>
-      <tr>
-        <td>
-          30元
-        </td>
-        <td>
-          不可素食
-        </td>
-      </tr>
+      <template v-for="(item, i) in products" :key="item.name">
+        <tr>
+          <th rowspan="2">{{ i + 1}}</th>
+          <td colspan="2">
+            {{ item.name }}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            {{ item.price }}
+          </td>
+          <td>
+            {{ item.vegan ? "可素食" : "不可素食" }} 
+          </td>
+        </tr>
+      </template>
     </tbody>
   </table>
   <p><a href="https://vue3js.cn/docs/zh/guide/list.html#%E5%9C%A8-template-%E4%B8%AD%E4%BD%BF%E7%94%A8-v-for">參考介紹</a></p>
