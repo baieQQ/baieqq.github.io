@@ -11,8 +11,9 @@
     <span v-else>顯示元件</span>
   </button>
   <hr>
-  <child v-if="isShowing"></child>
-
+  <keep-alive>
+    <child v-if="isShowing"></child>
+  </keep-alive>
   <p>講解事項：</p>
   <ul>
     <li>Vue 都是元件，元件的生命週期</li>

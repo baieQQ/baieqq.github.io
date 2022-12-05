@@ -41,6 +41,7 @@ fetch(jsonUrl, {method: 'get'})
 }).then((data) => {
   jsonData = data.data.XML_Head.Infos.Info;
   console.log(jsonData)
+  console.log(Array.isArray(jsonData))
   pagination(jsonData, 1);
 })
 

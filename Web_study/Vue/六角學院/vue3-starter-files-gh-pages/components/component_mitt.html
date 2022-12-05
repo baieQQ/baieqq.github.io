@@ -13,6 +13,7 @@
 
 <script type="module">
   import 'https://unpkg.com/mitt/dist/mitt.umd.js'; // mitt
+  const emitter = mitt();
 
   const app = Vue.createApp({});
 
@@ -28,7 +29,9 @@
     },
     methods: {
       sendData() {
-
+        console.log('sendData')
+        emitter.emit('sendProduct', this.product);
+        // 自定義事件名稱、資料
       }
     },
     template: `<div class="card" style="width: 18rem;">
@@ -45,7 +48,10 @@
       }
     },
     created() {
-
+      emitter.on('sendProduct', (data) => {
+        console.log(data);
+        this.item = data;
+      })
     },
     template: `<div class="card" style="width: 18rem;">
       <div class="card-body">

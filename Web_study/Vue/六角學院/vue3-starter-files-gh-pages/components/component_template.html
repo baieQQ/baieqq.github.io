@@ -15,22 +15,22 @@
   <hr>
   <h3>元件運用</h3>
   <h4>直接使用 標籤 名稱</h4>
-<!--  <alert></alert>-->
+ <alert></alert>
 
   <h4>搭配 v-for 也是沒問題的</h4>
-<!--  <alert v-for="i in array" :key="i"></alert>-->
+ <alert v-for="i in array" :key="i"></alert>
 
   <h4>使用 v-is 綁定</h4>
-<!--  <div v-is="'alert'"></div>-->
+ <div v-is="'alert'"></div>
 
   <h4>動態屬性</h4>
-<!--  <input type="text" v-model="componentName">-->
+ <input type="text" v-model="componentName">
 
   <p>任何標籤均可搭配 v-is 進行動態切換</p>
-<!--  <div v-is="componentName"></div>-->
+ <div v-is="componentName"></div>
 
   <p>在 <code>component</code> 標籤中，可以使用 is 縮寫（由 v2 版轉移過來的功能）</p>
-<!--  <component v-bind:is="componentName"></component>-->
+ <component v-bind:is="componentName"></component>
 
   <h2>動態標籤實戰技巧</h2>
   <table>
@@ -41,8 +41,8 @@
       </tr>
     </thead>
     <tbody>
-      <table-row></table-row>
-      <!-- <tr v-is="'table-row'"></tr>-->
+      <!-- <table-row></table-row>  -->
+      <tr v-is="'table-row'"></tr>
     </tbody>
   </table>
 </div>
@@ -63,6 +63,13 @@
       範例ㄧ
     </div>`,
   });
+
+  app.component('alert2', {
+    template: `<div class="alert alert-primary" role="alert">
+      範例二
+    </div>`,
+  });
+
 
 
   app.component('table-row', {

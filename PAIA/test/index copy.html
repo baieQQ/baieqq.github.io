@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.2/vue.global.js"></script>
+    <script src="cytoscape.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <button @click="get()">點我產生賽程表</button>
+        <div id="cy">
+
+        </div>
+    </div>
+</body>
+<script>
+    
+    const cy = cytoscape({
+                style: [
+                    {
+                        selector: 'node',
+                        style: {
+                            'background-color': 'rgba(255,255,255,0.2)',
+                            'border-color': 'black',
+                            'border-style': 'solid',
+                            'border-width': '1px',
+                            'shape': 'rectangle',
+                            'width': 40,
+                            'height': 100,
+                            'label': 'data(name)',
+                            'text-halign': 'center',
+                            'text-valign': 'center',
+                            'font-size': 12,
+                        },
+                    },
+                    {
+                        selector: 'edge',
+                        style: {
+                            'line-color': 'black',
+                            'curve-style': 'taxi',
+                            'taxi-direction': 'vertical',
+                        },
+                    },
+                ],
+                container : document.getElementById('cy')
+            });    
+    const height = 100;
+    const width = 1000;
+    const heightGap = 200;
+    cy.add({group: 'nodes', data: { id: "root"}, position: { x: width / 2, y: -50}});
+    cy.userPanningEnabled(false);
+    cy.panningEnabled(false);
+    
+    function draw(depth, nowData, nowHeight, nowWidth, from){
+        const nowNode = nowData.nodes;
+        const nowLen = nowNode.length;
+        cy.add({
+            group: 'nodes',
+            data: { name: nowData.id, weight: 75, type: 'circle', id: nowData.id},
+            position: { x: nowWidth, y: nowHeight},
+        });   
+        cy.add({
+            group: 'edges',
+            data: { source: nowData.id, target: from},
+        })
+        if(nowLen <= 0){
+            return 
+        }
+        else{
+            const widthGap = (width >> (depth + 1));
+            let nextHeight = nowHeight + heightGap;
+            let nextLeftWidth = nowWidth - widthGap;
+            let nextRightWidth = nowWidth + widthGap;
+            for(let i = 0; i < nowLen; i++){
+                if(i === 0){
+                    draw(depth + 1, nowNode[i], nextHeight, nextLeftWidth, nowData.id);
+                }
+                else{
+                    draw(depth + 1, nowNode[i], nextHeight, nextRightWidth, nowData.id);
+                }
+            }
+        }
+    }
+    
+    const App = {
+        data() {
+            return {
+                jsonData: {},
+            }
+        },
+        methods: {
+            get(){
+                draw(1, this.jsonData, height, width / 2, 'root');
+                console.log(cy);
+            },
+        },
+        created() {
+            this.jsonData = 
+{
+	"id":"9e61e07a-790c-4880-96aa-ea2456934816",
+	"nodes":[
+		{
+			"id":"ded6f73c-96c9-4567-b3b4-34f45d18439a",
+			"nodes":[
+				{
+					"id":"be01a96c-f2d2-4428-82c8-797b22b93d57",
+					"nodes":[
+                        {
+                            "id":"1",
+                            "nodes":[]
+                        },
+                        {
+                            "id":"2",
+                            "nodes":[]
+                        }
+                    ]
+				},
+				{
+					"id":"b16551b3-c3e7-4d3e-8de6-3199101fbe97",
+					"nodes":[
+                        {
+                            "id":"3",
+                            "nodes":[]
+                        },
+                        {
+                            "id":"4",
+                            "nodes":[]
+                        }
+                    ]
+				}
+			]
+		},
+		{
+			"id":"19b631ff-ed7a-4a2f-81bc-1a818e4e0fbc",
+			"nodes":[
+				{
+					"id":"005e531a-83cb-4a43-b189-175507ef8a8a",
+					"nodes":[
+                        {
+                            "id":"11",
+                            "nodes":[]
+                        },
+                        {
+                            "id":"22",
+                            "nodes":[]
+                        }
+                    ]
+				},
+				{
+					"id":"dfc7588a-dd80-410a-b574-52ac98097fed",
+					"nodes":[
+                    ]
+				}
+			]
+		}
+	]
+}
+        },
+    };
+    
+    Vue.createApp(App).mount('#app');
+</script>
+<style>
+    button {
+        z-index: 9999;
+    }
+    #cy {
+        position: absolute;
+        left: 0;
+        top: 500;
+        right: 0;
+        bottom: 500;
+        z-index: 999;
+        width: 1000px;
+        height: 1000px;
+        border: 1px black solid;
+    }
+</style>
+</html>

@@ -85,14 +85,47 @@ const App = {
   },
   computed: {
     result2() {
-      
+      return `媽媽買了 ${this.productName}，
+      總共花費 ${this.productPrice} 元，另外這 
+      ${this.productVegan? '是' : '不是'} 素食的`
     }
   },
-  // 保留文字：
-  // `文字長度為 ${n.length} 個字，將儲存至變數中`
-  // `輸入的文字僅有 ${n.length} 個字，上一次有 ${o.length} 個字`
-  // `媽媽買了 ${this.productName}，總共花費 ${this.productPrice} 元，另外這 ${this.productVegan? '是' : '不是'} 素食的`
-
+  watch: {
+    product: {
+      handler(n, o) {
+        console.log(n, o);
+        this.result4 = `媽媽買了 ${this.product.name}，
+      總共花費 ${this.product.price} 元，另外這 
+      ${this.product.vegan ? '是' : '不是'} 素食的`
+      },
+      deep: true,
+    },
+    productName(){
+      this.result3 = `媽媽買了 ${this.productName}，
+      總共花費 ${this.productPrice} 元，另外這 
+      ${this.productVegan? '是' : '不是'} 素食的`
+    },
+    productPrice(){
+      this.result3 = `媽媽買了 ${this.productName}，
+      總共花費 ${this.productPrice} 元，另外這 
+      ${this.productVegan? '是' : '不是'} 素食的`
+    },
+    productVegan(){
+      this.result3 = `媽媽買了 ${this.productName}，
+      總共花費 ${this.productPrice} 元，另外這 
+      ${this.productVegan? '是' : '不是'} 素食的`
+    },
+    tempName(n, o){
+      console.log(n, o)
+      if(n.length > 10){
+        this.result = `文字長度為 ${n.length} 個字，將儲存至變數中`
+        this.name = n;
+      }
+      else{
+        this.result = `輸入的文字僅有 ${n.length} 個字，上一次有 ${o.length} 個字`
+      }
+    }
+  }
 };
 Vue.createApp(App).mount('#app');
 </script>

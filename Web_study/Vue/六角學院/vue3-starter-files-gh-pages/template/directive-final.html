@@ -11,7 +11,7 @@
           <a href="#" class="list-group-item list-group-item-action" 
             v-for="product in products"
             :key="product.name"
-            :class="{'active' : tempSelected.name == product.name}"
+            :class="{'active' : tempSelected.name === product.name}"
             @click.prevent="selectedProduct(product)">
             <h6 class="card-title mb-1"> {{ product.name }} </h6>
             <div class="d-flex align-items-center justify-content-between">
@@ -315,6 +315,10 @@ const App = {
       };
     },
     addToOrder(product){
+      if(product.count === 0){
+        alert("數量不可以為 0");
+        return;
+      }
       this.tempOrderList.push({
         ...product,
         total : (product.price + product.toppings.length * 10) * product.count

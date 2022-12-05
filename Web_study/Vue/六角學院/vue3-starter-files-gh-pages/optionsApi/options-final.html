@@ -7,30 +7,41 @@
   <div class="row h-100">
     <div class="col-md-3 h-100 d-flex flex-column">
       <div class="form-floating mb-2">
-        <input type="text" class="form-control" id="search" placeholder="search">
+        <input type="text" class="form-control" id="search" placeholder="search"
+          v-model="cacheSearch">
         <label for="search">search</label>
       </div>
       <div class="list-group option">
-        <label class="list-group-item" >
-          <input class="form-check-input me-1" type="radio" name="area">
-          {{ datastore.Name }}
+        <label class="list-group-item" v-for="item in filterSearch" :key="'filter' + item._id">
+          <input class="form-check-input me-1" type="radio" name="area"
+            :value="item"
+            @click="cacheArea = item">
+          {{ item.Name }}
         </label>
       </div>
     </div>
     <div class="col-md-8 h-100 d-flex flex-column">
       <div class="form-floating">
-        <select  id="cacheArea" class="form-select w-50 mb-2" aria-label="select example">
+        <select v-model="cacheArea" id="cacheArea" class="form-select w-50 mb-2" aria-label="select example">
           <option selected value="" disabled>瀏覽紀錄</option>
+          <option selected v-for="(item, key) in browseLog" 
+            :value="item"> {{ `${key + 1}.${item.Name}`}} </option>
         </select>
         <label for="cacheArea">瀏覽紀錄</label>
       </div>
       <div class="card overflow-auto">
-        <img :src="datastore.Picture1" class="card-img-top" :alt="datastore.Name">
-        <iframe width="100%" height="300" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
-                :src=`https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&q=${datastore.Py},${datastore.Px}(${datastore.Name})&z=16&output=embed`></iframe>
-        <div class="card-body">
-          <h5 class="card-title">{{ datastore.Name }}</h5>
-          <p>{{ datastore.Description }}</p>
+        <div v-if="cacheArea">
+          <img :src="cacheArea.Picture1" class="card-img-top" :alt="cacheArea.Name">
+          <iframe width="100%" height="300" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+                  :src=`https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&q=${cacheArea.Py},${cacheArea.Px}(${cacheArea.Name})&z=16&output=embed`></iframe>
+                  
+          <div class="card-body">
+            <h5 class="card-title">{{ cacheArea.Name }}</h5>
+            <p>{{ cacheArea.Description }}</p>
+          </div>
+        </div>
+        <div v-else class="card-body">
+          請選擇場域
         </div>
       </div>
     </div>
@@ -38,49 +49,45 @@
 </div>
 
 <script>
-const apiUrl = 'https://raw.githubusercontent.com/hexschool/KCGTravel/master/datastore_search.json';
+  const App = {
+    data() {
+      return {
+        datastore: [],
+        cacheArea: '',
+        cacheSearch: '',
+        browseLog: [],
+      };
+    },
+    methods: {
+      getApiData(){
+        const apiUrl = 'https://raw.githubusercontent.com/hexschool/KCGTravel/master/datastore_search.json';
 
-axios.get(apiUrl).then((res) => {
-  // 取得遠端資料
-})
+        axios.get(apiUrl).then((res) => {
+          this.datastore = res.data.result.records;
+          // console.log(this.datastore)
+        })
+        // console.log(this.datastore)
+      }
+    },
+    computed: {
+      filterSearch(){
+        return this.datastore.filter(item => item.Name.match(this.cacheSearch));
+      }
+    },
+    watch: {
+      cacheArea() {
+        if(this.browseLog.length >= 10){
+          this.browseLog.shift();
+        }
+        this.browseLog.push(this.cacheArea);
+      }
+    },
+    created() {
+      this.getApiData();
+    },
+  };
 
-const App = {
-  data() {
-    return {
-      datastore: {
-        "Ticketinfo": "免費參觀",
-        "Zone": "三民區",
-        "Px": "120.32707",
-        "Py": "22.6727",
-        "Add": "高雄市三民區鼎金後路461巷",
-        "Gov": "397000000A",
-        "Class2": null,
-        "Class1": "2",
-        "Website": "",
-        "Opentime": "全天候開放",
-        "Description": "狹長型的檨仔林埤濕地公園位於高雄市三民區，鼎金後路與鼎金系統交流道之間，是高雄市近年來整治成功，兼具滯洪、防洪、休閒教育與生態功能的埤塘濕地公園之一。園區北側有「生態密林區」，茂密的原生檨仔樹林如同都市之肺，可以阻隔、緩衝北側高速公路對生態與環境造成的干擾; 「生態維持區」則將原有地形疏浚深化，形成生態浮島與水域栽培育區，遍植野薑花、慈菇、香蒲等水生植物，利用生態池水體自淨機制淨化水質。清新的環境與自然的綠意，吸引水鳥與生物棲息，腳踏車道與林蔭綠意提供遊人休憩放鬆的清淨角落，也是高雄市美麗的後花園。",
-        "Remarks": "",
-        "Parkinginfo_py": "0",
-        "Parkinginfo_px": "0",
-        "Name": "檨仔林埤濕地公園",
-        "Level": null,
-        "Picture1": "https://raw.githubusercontent.com/hexschool/KCGTravel/master/image/%E4%B8%89%E6%B0%91%E5%8D%80/%E6%AA%A8%E4%BB%94%E6%9E%97%E5%9F%A4%E6%BF%95%E5%9C%B0%E5%85%AC%E5%9C%9201.jpg",
-        "Toldescribe": "狹長型的檨仔林埤濕地公園位於高雄市三民區，鼎金後路與鼎金系統交流道之間，是高雄市近年來整治成功，兼具滯洪、防洪、休閒教育與生態功能的埤塘濕地公園之一。園區北側有「生態密林區」，茂密的原生檨仔樹林如同都市之肺，可以阻隔、緩衝北側高速公路對生態與環境造成的干擾; 「生態維持區」則將原有地形疏浚深化，形成生態浮島與水域栽培育區，遍植野薑花、慈菇、香蒲等水生植物，利用生態池水體自淨機制淨化水質。清新的環境與自然的綠意，吸引水鳥與生物棲息，腳踏車道與林蔭綠意提供遊人休憩放鬆的清淨角落，也是高雄市美麗的後花園。",
-        "Changetime": "2015-06-02T14:03:30",
-        "Tel": "886-7-7995678",
-        "Picdescribe1": "檨仔林埤濕地公園",
-        "Travellinginfo": "",
-        "_id": 3,
-        "Id": "C1_397000000A_000011"
-      },
-      cacheArea: '',
-      cacheSearch: '',
-      browseLog: [],
-    };
-  },
-};
-
-Vue.createApp(App).mount('#app');
+  Vue.createApp(App).mount('#app');
 </script>
 
 <style>

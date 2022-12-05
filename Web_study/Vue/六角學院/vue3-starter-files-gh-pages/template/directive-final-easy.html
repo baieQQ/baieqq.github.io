@@ -197,6 +197,10 @@ const App = {
       };
     },
     addToOrder(product){
+      if(product.count === 0){
+        alert("數量不可以為 0");
+        return;
+      }
       this.orderList.push({
         ...product,
         total : (product.price + product.toppings.length * 10) * product.count
