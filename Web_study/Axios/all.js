@@ -1,7 +1,17 @@
-axios.get('https://hexschool.github.io/ajaxHomework/data.json')
+let ary = [];
+
+axios.get('https://hexschool.github.io/ajaxHomework/data.jsonq')
   .then(function (response) {
-    let ary = response.data;
-    console.log(ary[0].name);
+    ary = response.data;
+    renderData()
+  })
+  .catch(error => {
+    console.log(error)
+  })
+
+  function renderData(){
     const title = document.querySelector('.title');
     title.textContent = ary[0].name;
-  });
+  }
+  
+  console.log(ary)
