@@ -83,4 +83,8 @@ function addCircle({ dom, text, data }) {
   };
   let myChart = echarts.init(dom, 'dark');
   myChart.setOption(option);
+  window.addEventListener('resize', function() {
+    myChart.resize();
+  });
 }
+
