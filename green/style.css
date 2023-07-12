@@ -1,0 +1,61 @@
+@import 
+url("https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css");
+
+*{
+    padding: 0;
+    margin: 0;
+    list-style: none; /* 去除清單前的圈圈 */
+    font-family: 'Noto Sans TC', sans-serif; /* google 字體 */
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #E0E0E0;
+    width: 100%;
+    height: auto;
+}
+
+.title {
+    text-align: center;
+    margin: 10px;
+}
+
+.wrap{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: auto;
+}
+
+
+.wrap .item {
+    border: black solid 5px;
+    width: 45%;
+    height: 45vh;
+    margin: 20px 10px 0px 10px;
+    border-radius: 15px;
+}
+
+@media screen and (max-width:1200px) { 
+    .wrap .item{
+        width: 45%;
+        height: 60vh;
+    }   
+}
+
+@media screen and (max-width:992px) { 
+    .wrap .item{
+        width: 45%;
+        height: 80vh;
+    }   
+}
+
+
+@media screen and (max-width:576px) { 
+    .wrap .item{
+        width: 95%;
+        height: 50vh;
+    }   
+}
