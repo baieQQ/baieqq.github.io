@@ -1,9 +1,3 @@
-var circle_1 = document.getElementById('circle_1');
-var circle_2 = document.getElementById('circle_2');
-var circle_3 = document.getElementById('circle_3');
-var circle_4 = document.getElementById('circle_4');
-var circle_5 = document.getElementById('circle_5');
-
 addCircle({
   dom: circle_1, 
   text:'每次通勤的距離',
@@ -51,21 +45,21 @@ addCircle({
 ]})
 
 addBar({
-  dom: circle_5, 
+  dom: bar_1, 
   text:'一周內外出活動的主要目的',
   xAxisData: ['通勤', '通學', '商務', '購物', '個人活動', '休閒', '業務外出'],
   seriesData: [158, 89, 46, 135, 81, 139, 20],
 })
 
 addBar({
-  dom: circle_6, 
+  dom: bar_2, 
   text:'導致您外出時不願意使用綠運輸的原因',
   xAxisData: ['缺乏方便性', '不舒適', '路線不完善', '資訊不足', '個人需求不符'],
   seriesData: [277, 169, 233, 110, 62],
 })
 
 addBar({
-  dom: circle_7, 
+  dom: bar_3, 
   text:'增加您外出時更願意嘗試使用綠運輸的原因',
   xAxisData: ['試用機會', '清晰、易懂的資訊', '改善路線與便利設施', '提供經濟誘因', '引入創新科技'],
   seriesData: [86, 207, 288, 133, 133],

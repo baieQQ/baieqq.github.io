@@ -1,75 +1,98 @@
-var circle_1 = document.getElementById('circle_1');
-var circle_2 = document.getElementById('circle_2');
-var circle_3 = document.getElementById('circle_3');
-var circle_4 = document.getElementById('circle_4');
-var circle_5 = document.getElementById('circle_5');
-
 addCircle({
   dom: circle_1, 
-  text:'是否使用過台南市大眾運輸工具',
+  text:'您是否使用過台南市之共享運具 ',
   data: [
-    { value: 353, name: '是' },
-    { value: 15, name: '否' },
+    { value: 211, name: '是' },
+    { value: 157, name: '否' },
 ]})
 
 addCircle({
   dom: circle_2, 
-  text:'通常使用哪種大眾運輸工具',
+  text:'您通常在台南市內使用哪種共享運具',
   data: [
-    { value: 144, name: '公車' },
-    { value: 103, name: '火車' },
-    { value: 99, name: '很少使用大眾運輸' },
+    { value: 126, name: 'Ubike' },
+    { value: 50, name: 'GoShare' },
+    { value: 30, name: 'iRent' },
+    { value: 5, name: '其他' },
   ]})
 
 addCircle({
   dom: circle_3, 
-  text:'通勤時主要使用的交通工具？',
+  text:'您使用台南市共享運具的頻率是多少？',
   data: [
-    { value: 20, name: '步行' },
-    { value: 10, name: '自行車' },
-    { value: 35, name: '公車' },
-    { value: 17, name: '共享運具' },
-    { value: 30, name: '電動汽機車' },
-    { value: 237, name: '燃油汽機車' }
+    { value: 101, name: '不定期' },
+    { value: 13, name: '周末' },
+    { value: 5, name: '每天' },
+    { value: 2, name: '周一至周五' },
   ]})
 
 addCircle({
   dom: circle_4, 
-  text:'一星期的平均通勤成本',
+  text:'您認為台南市共享運具的便利性如何？',
   data: [
-    { value: 147, name: '100元以下' },
-    { value: 119, name: '101~200元' },
-    { value: 27, name: '201~300元' },
-    { value: 22, name: '301~400元' },
-    { value: 8, name: '401~500元' },
-    { value: 37, name: '500元以上' }
+    { value: 22, name: '非常滿意' },
+    { value: 73, name: '滿意' },
+    { value: 82, name: '普通' },
+    { value: 23, name: '不滿意' },
+    { value: 11, name: '非常不滿意' },
 ]})
 
-addBar({
+addCircle({
   dom: circle_5, 
-  text:'一周內外出活動的主要目的',
-  xAxisData: ['通勤', '通學', '商務', '購物', '個人活動', '休閒', '業務外出'],
-  seriesData: [158, 89, 46, 135, 81, 139, 20],
-})
+  text:'您覺得台南市共享運具的價格是否合理？',
+  data: [
+    { value: 34, name: '非常合理' },
+    { value: 109, name: '合理' },
+    { value: 61, name: '普通' },
+    { value: 6, name: '不合理' },
+    { value: 1, name: '非常不合理' },
+]})
 
-addBar({
+addCircle({
   dom: circle_6, 
-  text:'導致您外出時不願意使用綠運輸的原因',
-  xAxisData: ['缺乏方便性', '不舒適', '路線不完善', '資訊不足', '個人需求不符'],
-  seriesData: [277, 169, 233, 110, 62],
-})
+  text:'您使用台南市共享運具的主要原因是什麼？',
+  data: [
+    { value: 107, name: '方便快捷' },
+    { value: 44, name: '無需煩惱停車位' },
+    { value: 22, name: '價格便宜' },
+    { value: 19, name: '環境友善' },
+    { value: 19, name: '其他' },
+]})
 
-addBar({
+addCircle({
   dom: circle_7, 
-  text:'增加您外出時更願意嘗試使用綠運輸的原因',
-  xAxisData: ['試用機會', '清晰、易懂的資訊', '改善路線與便利設施', '提供經濟誘因', '引入創新科技'],
-  seriesData: [86, 207, 288, 133, 133],
-})
+  text:'您使用台南市共享運具時\n是否有遇到維護不良或車輛故障的情況？',
+  data: [
+    { value: 81, name: '是' },
+    { value: 130, name: '否' },
+]})
+
+addCircle({
+  dom: circle_8, 
+  text:'您對台南市的共享運具覆蓋範圍滿意度如何？',
+  data: [
+    { value: 8, name: '非常滿意' },
+    { value: 50, name: '滿意' },
+    { value: 80, name: '普通' },
+    { value: 55, name: '不滿意' },
+    { value: 18, name: '非常不滿意' },
+]})
+
+addCircle({
+  dom: circle_9, 
+  text:'您是否願意推薦他人使用台南市共享運具？',
+  data: [
+    { value: 163, name: '是' },
+    { value: 48, name: '否' },
+]})
 
 function addCircle({ dom, text, data }) {
   option = {
     title: {
       text: text,
+      textStyle: {
+        lineHeight: 25
+      },
       subtext: '',
       left: 'left',
       top: 5,

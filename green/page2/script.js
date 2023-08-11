@@ -1,9 +1,3 @@
-var circle_1 = document.getElementById('circle_1');
-var circle_2 = document.getElementById('circle_2');
-var circle_3 = document.getElementById('circle_3');
-var circle_4 = document.getElementById('circle_4');
-var circle_5 = document.getElementById('circle_5');
-
 addCircle({
   dom: circle_1, 
   text:'您是否使用過台南市大眾運輸工具',
@@ -80,11 +74,8 @@ addCircle({
   dom: circle_8, 
   text:'是否願意在台南市支付更高的票價\n以換取更好的大眾運輸服務品質',
   data: [
-    { value: 8, name: '非常滿意' },
-    { value: 89, name: '滿意' },
-    { value: 182, name: '普通' },
-    { value: 49, name: '不滿意' },
-    { value: 25, name: '非常不滿意' },
+    { value: 254, name: '是' },
+    { value: 99, name: '否' },
 ]})
 
 function addCircle({ dom, text, data }) {
@@ -131,75 +122,6 @@ function addCircle({ dom, text, data }) {
         },
       }
     ]
-  };
-  let myChart = echarts.init(dom, 'dark');
-  myChart.setOption(option);
-  window.addEventListener('resize', function() {
-    myChart.resize();
-  });
-}
-
-
-function addBar({ dom, text, xAxisData, seriesData}) {
-  option = {
-    title: {
-      text: text,
-      subtext: '',
-      left: 'left',
-      top: 5,
-      left: 5
-    },
-    tooltip: {
-      trigger: 'axis',
-      axisPointer: {
-        // Use axis to trigger tooltip
-        type: 'shadow' // 'shadow' as default; can also be 'line' or 'shadow'
-      }
-    },
-    grid: {
-      left: '3%',
-      right: '4%',
-      bottom: '3%',
-      containLabel: true
-    },
-    xAxis: {
-      type: 'category',
-      data: xAxisData,
-      axisTick: {
-        show: false,
-      },
-      axisLabel: {
-        interval: 0,
-        width: 55,
-        overflow: 'break'
-      }
-    },
-    yAxis: {
-      type: 'value'
-    },
-    series: [
-      {
-        data: seriesData,
-        type: 'bar',
-        showBackground: true,
-        backgroundStyle: {
-          color: 'rgba(180, 180, 180, 0.2)'
-        },
-        label: {
-          normal: {
-            formatter: '{c} 人',
-            show: true,
-            position: 'inside',
-            fontSize: '14',
-          },
-        },
-        labelLine: {
-          normal: {
-            show: true
-          }
-        },
-      },
-    ],
   };
   let myChart = echarts.init(dom, 'dark');
   myChart.setOption(option);
