@@ -1,0 +1,80 @@
+@import 
+url("https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css");
+
+*{
+    padding: 0;
+    margin: 0;
+    list-style: none; /* 去除清單前的圈圈 */
+    font-family: 'Noto Sans TC', sans-serif; /* google 字體 */
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #E0E0E0;
+    width: 100%;
+    height: auto;
+}
+
+.title {
+    text-align: center;
+    margin: 10px 5px;
+}
+
+.title-text {
+    text-align: center;
+    margin: 10px 5px;
+}
+
+.person_wrap{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: auto;
+    padding: 30px 0;
+}
+
+
+.person_wrap .item, .person_wrap .item-m{
+    border: black solid 5px;
+    width: 45%;
+    height: 45vh;
+    margin: 0px 5px 10px 5px;
+    border-radius: 15px;
+}
+
+@media screen and (max-width:1200px) { 
+    .person_wrap .item, .person_wrap .item-m{
+        width: 45%;
+        height: 60vh;
+    }   
+}
+
+@media screen and (max-width:992px) { 
+    .person_wrap .item{
+        width: 45%;
+        height: 60vh;
+        min-height: 400px;
+        max-height: 500px;
+    }   
+
+    .person_wrap .item-m{
+        width: 90%;
+        height: 60vh;
+        min-height: 400px;
+        max-height: 500px;
+    }   
+}
+
+
+@media screen and (max-width:576px) { 
+    .title {
+        font-size: 1.5rem;
+    }
+
+    .person_wrap .item, .person_wrap .item-m{
+        width: 95%;
+        height: 50vh;
+    }   
+}
