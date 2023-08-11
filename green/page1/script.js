@@ -97,7 +97,7 @@ function addCircle({ dom, text, data }) {
             formatter: '{b}:{d}%',
             show: true,
             position: 'outside',
-            fontSize: '10',
+            fontSize: '12',
           },
         },
         labelLine: {
@@ -163,10 +163,10 @@ function addBar({ dom, text, xAxisData, seriesData}) {
         },
         label: {
           normal: {
-            formatter: '{c} 人',
+            formatter: '{c}人',
             show: true,
             position: 'inside',
-            fontSize: '14',
+            fontSize: '12',
           },
         },
         labelLine: {
