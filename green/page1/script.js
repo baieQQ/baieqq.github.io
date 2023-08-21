@@ -97,7 +97,7 @@ function addCircle({ dom, text, data }) {
             formatter: '{b}:{d}%',
             show: true,
             position: 'outside',
-            fontSize: '10',
+            fontSize: '14',
           },
         },
         labelLine: {

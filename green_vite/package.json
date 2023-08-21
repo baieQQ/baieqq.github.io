@@ -1,0 +1,26 @@
+{
+  "name": "green_train",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "axios": "^1.4.0",
+    "bootstrap": "^5.1.1",
+    "echarts": "^5.4.3",
+    "pinia": "^2.1.6",
+    "sass": "^1.66.1",
+    "tailwind": "^4.0.0",
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.2.3",
+    "vite": "^4.4.5"
+  }
+}
