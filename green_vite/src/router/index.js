@@ -5,10 +5,6 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: '/main-page'
-    },
-    {
-      path: '/main-page',
       name: 'MainPage',
       component: () => import('@/views/MainPage.vue'),
       meta: { requiresAuth: false },

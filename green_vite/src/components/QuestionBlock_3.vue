@@ -52,15 +52,33 @@ export default defineComponent({
   data() {
     return {
       dataMap: [
-        'A1您在最近一周內於臺南市外出活動的主要目的是什麼？', 
-        'A2呈上題，請問通勤的距離大約有多遠？', 
-        'A3呈上題， 請問通勤的頻率大約多頻繁？',
-        'A4呈上題，請問目前主要使用哪種交通工具通勤？',
-        'A5呈上題，請問一星期的平均通勤成本大約是多少金額?',
-        'A6請問什麼原因會導致您在外出時不太願意使用綠運輸',
-        'A7請問什麼會增加您在外出時更願意去嘗試綠運輸的意願',
+        'C0您是否使用過台南市之共享運具 ？(例:U-Bike、GoShare)',
+        'C1您通常在台南市內使用哪種共享運具  ？', 
+        'C2您使用台南市共享運具的頻率是多少？', 
+        'C3您認為台南市共享運具的便利性如何？',
+        'C4您覺得台南市共享運具的價格是否合理？',
+        'C5您使用台南市共享運具的主要原因是什麼？',
+        'C6您使用台南市共享運具時是否有遇到維護不良或車輛故障的情況？',
+        'C7您對台南市的共享運具覆蓋範圍滿意度如何？',
+        'C8您是否願意推薦他人使用台南市共享運具？',
       ],
       questionsFilter: [
+        {
+          echartsShow: true,
+          gender: ['生理男', '生理女'],
+          age: ['18歲以下', '19-30歲', '31-40歲', '41-50歲', '51-60歲', '60歲以上'],
+          edcaution: ['國中以下', '高中職畢業', '大學畢業', '碩士畢業以上'],
+          life_time: ['1年以下', '1-2年', '3-5年', '6-10年', '10年以上'],
+          status: ['台南市民-學生身分', '台南市民-就業者', '台南市民-(其他)', '從外縣市到台南的就業者', '從外縣市到台南的求學者', '觀光客'],
+        },
+        {
+          echartsShow: true,
+          gender: ['生理男', '生理女'],
+          age: ['18歲以下', '19-30歲', '31-40歲', '41-50歲', '51-60歲', '60歲以上'],
+          edcaution: ['國中以下', '高中職畢業', '大學畢業', '碩士畢業以上'],
+          life_time: ['1年以下', '1-2年', '3-5年', '6-10年', '10年以上'],
+          status: ['台南市民-學生身分', '台南市民-就業者', '台南市民-(其他)', '從外縣市到台南的就業者', '從外縣市到台南的求學者', '觀光客'],
+        },
         {
           echartsShow: true,
           gender: ['生理男', '生理女'],
@@ -262,87 +280,59 @@ export default defineComponent({
       });
 
       const map = new Map()
-      const textArray = ['一周內外出活動的主要目的',
-                        '每次通勤的距離',
-                        '每周通勤的頻率',
-                        '通勤時主要使用的交通工具',
-                        '一星期的平均通勤成本',
-                        '導致您外出時不願意使用綠運輸的原因',
-                        '增加您外出時更願意嘗試使用綠運輸的原因'];
+      const textArray = ['您是否使用過台南市之共享運具',
+                        '您通常在台南市內使用哪種共享運具',
+                        '您使用台南市共享運具的頻率是多少？',
+                        '您認為台南市共享運具的便利性如何？',
+                        '您覺得台南市共享運具的價格是否合理？',
+                        '您使用台南市共享運具的主要原因是什麼？',
+                        '您使用台南市共享運具時\n是否有遇到維護不良或車輛故障的情況？',
+                        '您對台南市的共享運具覆蓋範圍滿意度如何？',
+                        '您是否願意推薦他人使用台南市共享運具？'];
       const questionsMap = [
-        ['通勤：上、下班。', '通學：上、下學、圖書館。', '商務：外出開會、出差（非經常性）。', '購物：買菜、加油、大賣場、百貨公司、逛街。', '個人活動：照顧家人、剪頭髮、接送小孩、補習。', '休閒：去健身房、運動、度假、看體育活動、去博物館、公園、劇院。', '業務外出：去拜訪客戶、推銷保險或商品（經常性）。'],
-        ['1公里以內', '1-5公里', '6-10公里', '11-15公里', '15-20公里', '21公里以上'],
-        ['不定期', '1 ~ 2 天（一周）', '3 ~ 4 天（一周）', '5 ~ 7 天（一周）'],
-        ['步行', '自行車', '公車', '共享運具-租用車輛(GoShare、U-Bike、iRent等)', '汽機車（電動）', '汽機車（燃油）'],
-        ['100元以下', '101~200元', '201~300元', '301~400元', '401~500元', '500元以上'],
-        ['缺乏方便性：會造成我需要花更長的時間或費用才能到達目的地。', '不舒適或不便：沒有像自己騎車或開車舒適或方便 (如騎單車很熱、配合公車時間很麻煩、多人在車上空間人擠人)', '路線不完善或不方便：公車路線覆蓋不足或無法直達目的地，需要轉乘或多次換車等，覺得麻煩。', '資訊不足：啊我就不清楚可用的路線、時刻表、票價等相關資訊。', '個人需求不符：我自己身體行動不便、出門行李多或大等等，搭車不方便'],
-        ['提供試用機會：舉辦免費或優惠的試乘試騎活動', '提供清晰、易懂的資訊：包括路線、時刻表、票價、轉乘資訊等', '改善路線與便利設施：改善路線覆蓋範圍，提供更方便的轉乘點，增加便利性及安全性。', '提供經濟誘因：例如補貼、優惠票價、租金補貼等，降低其成本負擔。', '引入創新科技：推行共享交通工具平台等，提供方便的預訂、導航和支付等功能'],
+        ['是', '否'],
+        ['U-Bike', 'GoShare', 'iRent'],
+        ['每天', '週一至週五', '週末', '不定期'],
+        ['非常方便', '方便', '普通', '不方便', '非常不方便'],
+        ['非常合理', '合理', '普通', '不合理', '非常不合理'],
+        ['環境友善', '方便快捷', '價格便宜', '無需煩惱停車位'],
+        ['是', '否'],
+        ['非常滿意', '滿意', '普通', '不滿意', '非常不滿意'],
+        ['是', '否'],
       ]
-      if(index === 0 || index === 5 || index === 6){
-        questionsMap[index].forEach(item => {
-          map.set(item, 0);
-        })
-        question_data.forEach(item => {
-          questionsMap[index].forEach(item_map => {
-            const category = item[this.dataMap[index]]
-            if(category.indexOf(item_map) !== -1){
-             map.set(item_map, map.get(item_map) + 1)
-            }
-          })
-        })
-
-        const xAxisData = []
-        const seriesData = []
-        let sumValue = 0
-        const sortedEntries = Array.from(map).sort((a, b) => b[1] - a[1]);
-        console.log(sortedEntries);
-        sortedEntries.forEach(([key, value]) => {
-          xAxisData.push(key.substr(0,key.indexOf('：')));
-          seriesData.push(value);
+      questionsMap[index].forEach(item => {
+        map.set(item, 0);
+      })
+      question_data.forEach(item => {
+        const category = item[this.dataMap[index]]
+        if(map.has(category)) {
+          map.set(category, map.get(category) + 1)
+        } else {
+          map.set(category, 1)
+        }
+      })
+      const echartsData = []
+      let sumValue = 0
+      map.forEach((value, key) => {
+        if((value > 3 || questionsMap[index].includes(key)) && key !== undefined) {
+          echartsData.push({
+            name: key,
+            value: value
+          });
           sumValue += value;
-        })
-
-        this.addBar({
-          dom: document.getElementById(`circle_${index}_1`), 
-          text: `${textArray[index]}\n圖表人數：${question_data.length}`,
-          xAxisData: xAxisData,
-          seriesData: seriesData,
-        })
-      } else {
-        questionsMap[index].forEach(item => {
-          map.set(item, 0);
-        })
-        question_data.forEach(item => {
-          const category = item[this.dataMap[index]]
-          if(map.has(category)) {
-            map.set(category, map.get(category) + 1)
-          } else {
-            map.set(category, 1)
-          }
-        })
-        const echartsData = []
-        let sumValue = 0
-        map.forEach((value, key) => {
-          if((value > 3 || questionsMap[index].includes(key)) && key !== undefined) {
-            echartsData.push({
-              name: key,
-              value: value
-            });
-            sumValue += value;
-          } 
-        })
-        console.log(index, echartsData)
-        this.addCircle({
-          dom: document.getElementById(`circle_${index}_1`), 
-          text: `${textArray[index]}\n圖表人數：${sumValue}`,
-          data: echartsData
-        })
-      }
+        } 
+      })
+      console.log(index, echartsData)
+      this.addCircle({
+        dom: document.getElementById(`circle_${index}_1`), 
+        text: `${textArray[index]}\n圖表人數：${sumValue}`,
+        data: echartsData
+      })
     },
     setupWatchers() {
       this.$watch(
         () => this.data,
-        (newValue, oldValue) => {
+        () => {
           this.init()
         }
       );
@@ -350,7 +340,7 @@ export default defineComponent({
       this.questionsFilter.forEach((object, index) => {
         this.$watch(
           () => this.questionsFilter[index],
-          (newValue, oldValue) => {
+          () => {
             this.changeEchartDisplay(index)
           },
           { deep: true }
